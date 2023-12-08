@@ -1,4 +1,4 @@
-"D:\app\intellij\CLion 2023.2.2\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=D:/app/intellij/CLion 2023.2.2/bin/ninja/win/x64/ninja.exe" -G Ninja -S C:\Users\昌西\OneDrive\桌面\StuChc -B C:\Users\昌西\OneDrive\桌面\StuChc\cmake-build-debug
+"D:\app\intellij\CLion 2023.2.2\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=D:/app/intellij/CLion 2023.2.2/bin/ninja/win/x64/ninja.exe" -G Ninja -S D:\project\gitcc\StuChc\StuChc -B D:\project\gitcc\StuChc\StuChc\cmake-build-debug
 -- The C compiler identification is GNU 8.1.0
 -- The CXX compiler identification is GNU 8.1.0
 -- Detecting C compiler ABI info
@@ -11,6 +11,6 @@
 -- Check for working CXX compiler: D:/app/mingw/mingw64/bin/c++.exe - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
--- Configuring done (6.2s)
+-- Configuring done (2.6s)
 -- Generating done (0.0s)
--- Build files have been written to: C:/Users/昌西/OneDrive/桌面/StuChc/cmake-build-debug
+-- Build files have been written to: D:/project/gitcc/StuChc/StuChc/cmake-build-debug

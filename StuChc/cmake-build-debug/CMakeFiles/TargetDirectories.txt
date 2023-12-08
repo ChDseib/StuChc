@@ -1,3 +1,3 @@
-C:/Users/昌西/OneDrive/桌面/StuChc/cmake-build-debug/CMakeFiles/StuChc.dir
-C:/Users/昌西/OneDrive/桌面/StuChc/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/昌西/OneDrive/桌面/StuChc/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+D:/project/gitcc/StuChc/StuChc/cmake-build-debug/CMakeFiles/StuChc.dir
+D:/project/gitcc/StuChc/StuChc/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/project/gitcc/StuChc/StuChc/cmake-build-debug/CMakeFiles/rebuild_cache.dir

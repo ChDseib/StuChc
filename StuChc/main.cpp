@@ -2,7 +2,6 @@
 #include <fstream>
 #include <vector>
 #include <string>
-#include <algorithm>
 
 using namespace std;
 
@@ -89,52 +88,46 @@ int main() {
     vector<StudentInfo> students;
     Admin admin;
     Student student;
-
-    const string coursesFilename = "courses";  //课程信息  课程编号/课程名/授课教师
-    const string studentsFilename = "students"; //学生信息  用户名/密码/专业
-    const string selectionFilename = "selection"; //学生选课信息文件  学生编号/所选，所选，所选。。。。
-
+    const string coursesFilename ="courses";  //课程信息  课程编号/课程名/授课教师
+    const string studentsFilename ="students"; //学生信息  用户名/密码/专业
+    const string selectionFilename ="selection"; //学生选课信息文件  学生编号/所选，所选，所选。。。。
     admin.loadFromFile(allCourses, coursesFilename);
-
     ifstream studentFile(studentsFilename);
-
     if (studentFile.is_open()) {
         students.clear();
 
         string line;
         while (getline(studentFile, line)) {
             StudentInfo studentInfo;
-            size_t pos1 = line.find(',');
-            size_t pos2 = line.find(',', pos1 + 1);
-            size_t pos3 = line.find(',', pos2 + 1);
-            if (pos1 != string::npos && pos2 != string::npos && pos3 != string::npos) {
-                studentInfo.username = line.substr(0, pos1);
-                studentInfo.password = line.substr(pos1 + 1, pos2 - pos1 - 1);
-                studentInfo.major = line.substr(pos2 + 1, pos3 - pos2 - 1);
+            size_t pos1=line.find(',');
+            size_t pos2=line.find(',', pos1+1);
+            size_t pos3=line.find(',', pos2+1);
+            if (pos1!=string::npos && pos2!=string::npos && pos3!=string::npos) {
+                studentInfo.username=line.substr(0, pos1);
+                studentInfo.password=line.substr(pos1+1, pos2-pos1-1);
+                studentInfo.major=line.substr(pos2+1, pos3-pos2-1);
                 students.push_back(studentInfo);
             }
         }
-
         studentFile.close();
-        cout << "从文件 " << studentsFilename << " 中读取学生信息成功。" << endl;
+        cout<<"从文件"<<studentsFilename<<"中读取学生信息成功。"<<endl;
     } else {
-        cout << "无法打开文件 " << studentsFilename << " 进行读取。" << endl;
+        cout<<"无法打开文件"<<studentsFilename<<"进行读取。"<<endl;
     }
 
-    // 新增: 从文件中加载学生选课信息
+    // 从文件中加载学生选课信息
     student.loadCourseSelection(students, allCourses, selectionFilename);
 
     while (true) {
-        cout << "\n1. 登录为管理员\n2. 登录为学生\n3. 退出\n选择操作（1/2/3）: ";
+        cout<<"\n1. 登录为管理员\n2. 登录为学生\n3. 退出\n选择操作（1/2/3）:";
         int choice;
-        cin >> choice;
-
+        cin>>choice;
         switch (choice) {
             case 1: {
-                cout << "\n管理员登录成功！" << endl;
+                cout<<"\n管理员登录成功！"<<endl;
                 while (true) {
-                    cout << "\n1. 添加课程\n2. 删除课程\n3. 显示所有课程\n4. 保存课程信息到文件\n5. 返回上一级\n选择操作（1/2/3/4/5）: ";
-                    cin >> choice;
+                    cout<<"\n1. 添加课程\n2. 删除课程\n3. 显示所有课程\n4. 保存课程信息到文件\n5. 返回上一级\n选择操作（1/2/3/4/5）:";
+                    cin>>choice;
 
                     switch (choice) {
                         case 1:
@@ -150,10 +143,10 @@ int main() {
                             admin.saveToFile(allCourses, coursesFilename);
                             break;
                         case 5:
-                            cout << "\n返回上一级。\n";
+                            cout<<"\n返回上一级。\n";
                             break;
                         default:
-                            cout << "无效的选项。" << endl;
+                            cout<<"无效的选项。"<<endl;
                     }
 
                     if (choice == 5) {
@@ -164,18 +157,16 @@ int main() {
             }
 
             case 2: {
-                cout << "\n1. 登录\n2. 注册\n3. 返回上一级\n选择操作（1/2/3）: ";
-                cin >> choice;
-
+                cout<<"\n1. 登录\n2. 注册\n3. 返回上一级\n选择操作（1/2/3）:";
+                cin>>choice;
                 switch (choice) {
                     case 1: {
                         string username, password;
                         if (student.login(students, username, password)) {
-                            cout << "\n学生登录成功！" << endl;
+                            cout<<"\n学生登录成功！"<<endl;
                             while (true) {
-                                cout << "\n1. 添加课程\n2. 显示我的课程\n3. 返回上一级\n选择操作（1/2/3）: ";
-                                cin >> choice;
-
+                                cout<<"\n1. 添加课程\n2. 显示我的课程\n3. 返回上一级\n选择操作（1/2/3）:";
+                                cin>>choice;
                                 switch (choice) {
                                     case 1:
                                         student.addCourse(allCourses, students[0]);
@@ -184,48 +175,41 @@ int main() {
                                         student.displayMyCourses(students[0]);
                                         break;
                                     case 3:
-                                        cout << "\n返回上一级。\n";
+                                        cout<<"\n返回上一级。\n";
                                         break;
                                     default:
-                                        cout << "无效的选项。" << endl;
+                                        cout<<"无效的选项。"<<endl;
                                 }
-
                                 if (choice == 3) {
                                     break;
                                 }
                             }
                         } else {
-                            cout << "登录失败，用户名或密码错误。" << endl;
+                            cout<<"登录失败，用户名或密码错误。"<<endl;
                         }
                         break;
                     }
-
                     case 2:
                         student.registerStudent(students);
                         break;
-
                     case 3:
-                        cout << "\n返回上一级。\n";
+                        cout<<"\n返回上一级。\n";
                         break;
-
                     default:
-                        cout << "无效的选项。" << endl;
+                        cout<<"无效的选项。"<<endl;
                 }
-
                 break;
             }
-
             case 3:
                 admin.saveToFile(allCourses, coursesFilename);
                 // 保存学生信息到文件
                 student.saveToFile(students, studentsFilename);
                 // 保存学生选课信息到文件
                 student.saveCourseSelection(students, selectionFilename);
-                cout << "\n退出系统。" << endl;
+                cout<<"\n退出系统。"<<endl;
                 return 0;
-
             default:
-                cout << "无效的选项。" << endl;
+                cout<<"无效的选项。"<<endl;
         }
     }
 

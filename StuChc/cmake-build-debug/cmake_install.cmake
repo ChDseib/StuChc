@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/昌西/OneDrive/桌面/StuChc
+# Install script for directory: D:/project/gitcc/StuChc/StuChc
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/昌西/OneDrive/桌面/StuChc/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "D:/project/gitcc/StuChc/StuChc/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
