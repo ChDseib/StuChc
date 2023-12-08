@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 
+//补充信息填在此处：
+
 using namespace std;
 
 struct Course {
@@ -95,7 +97,6 @@ int main() {
     ifstream studentFile(studentsFilename);
     if (studentFile.is_open()) {
         students.clear();
-
         string line;
         while (getline(studentFile, line)) {
             StudentInfo studentInfo;
@@ -149,7 +150,7 @@ int main() {
                             cout<<"无效的选项。"<<endl;
                     }
 
-                    if (choice == 5) {
+                    if (choice==5) {
                         break;
                     }
                 }
@@ -180,7 +181,7 @@ int main() {
                                     default:
                                         cout<<"无效的选项。"<<endl;
                                 }
-                                if (choice == 3) {
+                                if (choice==3) {
                                     break;
                                 }
                             }
