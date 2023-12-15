@@ -101,16 +101,44 @@ class Student {
 public:
     //登录 用户名/密码
     bool login(const vector<StudentInfo>& students, string& username, string& password) {
+        cout<<"请输入用户名";
+        cin>>username;
+        cout<<"请输入密码：";
+        cin>>password;
+        for(int i=0;i<students.size();++i){
+            if((students[i].username==username)&&(students[i].password==password)){
 
+                return true;
+            }
+            else{
+                return false;}
+        }
     }
 
     //学生信息注册 用户名/密码/专业
     void registerStudent(vector<StudentInfo>& students) {
-
+        StudentInfo student;
+        cout<<"请输入用户名";
+        cin>>student.username;
+        cout<<"请输入密码：";
+        cin>>student.password;
+        cout<<"请输入专业：";
+        cin>>student.major;
+        students.push_back(student);
     }
 
     //保存学生信息
     void saveToFile(const vector<StudentInfo>& students, const string& filename) const {
+        ofstream file(filename);
+        if (file.is_open()) {
+            for (size_t i=0; i<students.size(); ++i) {
+                file<<students[i].username<<","<<students[i].password<<","<<students[i].major<<endl;
+            }
+            file.close();
+            cout<<"保存成功。"<<endl;
+        } else {
+            cout<<"无法打开文件"<<filename<<"进行保存。"<<endl;
+        }
 
     }
     //添加课程  先显示所有可选课程 选择后需判断冲突
@@ -240,6 +268,7 @@ int main() {
                     }
                     case 2:
                         student.registerStudent(students);
+                        student.saveToFile(students, studentsFilename);//保存用户信息到文件
                         break;
                     case 3:
                         cout<<"\n返回上一级。\n";
