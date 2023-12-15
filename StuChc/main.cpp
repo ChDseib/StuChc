@@ -120,7 +120,9 @@ public:
 
     //显示学生的所选信息
     void displayMyCourses(const StudentInfo& student) const {
-
+        std::cout << "学生 " << student.username << " 所选的课程有：\n";  //打印出学生的名字
+        for (const auto& course : student.courses) {
+            std::cout << "课程名称: " << course.courseName << ", 课程代码: " << course.courseCode << '\n';          //遍历课程列表，打印出每一门课程的名称
     }
 
     //保存选课信息 格式下面有讲
