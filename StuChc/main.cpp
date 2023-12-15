@@ -151,11 +151,10 @@ int main() {
             StudentInfo studentInfo; //学生信息
             size_t pos1=line.find(','); //查找第一个逗号
             size_t pos2=line.find(',', pos1+1); //查找第二个逗号
-            size_t pos3=line.find(',', pos2+1); //查找第三个逗号
-            if (pos1!=string::npos && pos2!=string::npos && pos3!=string::npos) { //如果三个逗号都找到了
+            if (pos1!=string::npos && pos2!=string::npos) { //如果三个逗号都找到了
                 studentInfo.username=line.substr(0, pos1); //用户名
                 studentInfo.password=line.substr(pos1+1, pos2-pos1-1); //密码
-                studentInfo.major=line.substr(pos2+1, pos3-pos2-1); //专业
+                studentInfo.major=line.substr(pos2+1); //专业
                 students.push_back(studentInfo); //添加到学生信息中
             }
         }
