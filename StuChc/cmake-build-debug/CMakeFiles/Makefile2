@@ -44,19 +44,19 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = "E:\Cline\CLion 2023.3\bin\cmake\win\x64\bin\cmake.exe"
+CMAKE_COMMAND = "D:\CLion 2023.3\bin\cmake\win\x64\bin\cmake.exe"
 
 # The command to remove a file.
-RM = "E:\Cline\CLion 2023.3\bin\cmake\win\x64\bin\cmake.exe" -E rm -f
+RM = "D:\CLion 2023.3\bin\cmake\win\x64\bin\cmake.exe" -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = E:\bb\StuChc\StuChc
+CMAKE_SOURCE_DIR = D:\ShuJuJieGou\StuChc\StuChc
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = E:\bb\StuChc\StuChc\cmake-build-debug
+CMAKE_BINARY_DIR = D:\ShuJuJieGou\StuChc\StuChc\cmake-build-debug
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -80,14 +80,14 @@ clean: CMakeFiles/StuChc.dir/clean
 CMakeFiles/StuChc.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\StuChc.dir\build.make CMakeFiles/StuChc.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\StuChc.dir\build.make CMakeFiles/StuChc.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=E:\bb\StuChc\StuChc\cmake-build-debug\CMakeFiles --progress-num=1,2 "Built target StuChc"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=D:\ShuJuJieGou\StuChc\StuChc\cmake-build-debug\CMakeFiles --progress-num=1,2 "Built target StuChc"
 .PHONY : CMakeFiles/StuChc.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/StuChc.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start E:\bb\StuChc\StuChc\cmake-build-debug\CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\ShuJuJieGou\StuChc\StuChc\cmake-build-debug\CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/StuChc.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start E:\bb\StuChc\StuChc\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\ShuJuJieGou\StuChc\StuChc\cmake-build-debug\CMakeFiles 0
 .PHONY : CMakeFiles/StuChc.dir/rule
 
 # Convenience name for target.
