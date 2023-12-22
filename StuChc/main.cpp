@@ -101,7 +101,7 @@ class Student {
 public:
     //登录 用户名/密码
     bool login(const vector<StudentInfo>& students, string& username, string& password) {
-        cout<<"请输入用户名";
+        cout<<"请输入用户名：";
         cin>>username;
         cout<<"请输入密码：";
         cin>>password;
@@ -118,7 +118,7 @@ public:
     //学生信息注册 用户名/密码/专业
     void registerStudent(vector<StudentInfo>& students) {
         StudentInfo student;
-        cout<<"请输入用户名";
+        cout<<"请输入用户名：";
         cin>>student.username;
         cout<<"请输入密码：";
         cin>>student.password;
@@ -143,35 +143,44 @@ public:
     }
     //添加课程  先显示所有可选课程 选择后需判断冲突
     void addCourse(vector<Course>& allCourses, StudentInfo& student) {
-        for(int i = 0; i < allCourses.size(); i++) {
+        for(int i = 1; i < allCourses.size(); i++) {
             cout << i << ": " << allCourses[i].courseName << " by " << allCourses[i].teacher << endl;
         }
         // 让学生选择课程
         int choice;
-        cout << "Enter the number of the course you want to add: ";
+        cout << "输入你想添加课程的序号： ";
         cin >> choice;
+        // 检查所选课程是否已经在学生的课程列表中
+        for(int i = 1; i < student.selectedCourses.size(); i++) {
+            if(student.selectedCourses[i].courseName == allCourses[choice].courseName) {
+                cout << "你已经选了这门课，请再次尝试" << endl;
+                return;
+            }
+        }
         // 将所选课程添加到学生的课程列表中
         if(choice >= 0 && choice < allCourses.size()) {
             student.selectedCourses.push_back(allCourses[choice]);
-            cout << "Course added successfully!" << endl;
+            cout << "选课成功!" << endl;
         } else {
-            cout << "Invalid choice. Please try again." << endl;
+            cout << "无效选择，再次尝试" << endl;
         }
     }
 
+
     void deleteCourse(vector<Course>& allCourses, StudentInfo& student) {
         for(int i = 0; i < student.selectedCourses.size(); i++) {
-            cout << i << ": " << student.selectedCourses[i].courseName << " by " << student.selectedCourses[i].teacher << endl;
+            cout << i+1 << ": " << student.selectedCourses[i].courseName << " by " << student.selectedCourses[i].teacher << endl;
         }
         int choice;
-        cout << "Enter the number of the course you want to delete: ";
+        cout << "输入你想删除课程的序号： ";
         cin >> choice;
+        choice=choice-1;
         // Check if the choice is within the range of selected courses
-        if(choice >= 0 && choice < student.selectedCourses.size()) {
+        if(choice >= 1 && choice < student.selectedCourses.size()) {
             student.selectedCourses.erase(student.selectedCourses.begin() + choice);
-            cout << "Course deleted successfully!" << endl;
+            cout << "删课成功!" << endl;
         } else {
-            cout << "Invalid choice. Please try again." << endl;
+            cout << "无效选择，再次尝试." << endl;
         }
     }
 
@@ -186,7 +195,7 @@ public:
 
     //保存选课信息 格式下面有讲
     void saveCourseSelection(const vector<StudentInfo>& students, const string& filename) const {
-        ofstream file(filename);  // 创建一个输出文件流对象
+        ofstream file("selection.txt");  // 创建一个输出文件流对象
         if (file.is_open()) {  // 检查文件是否成功打开
             for (size_t i = 0; i < students.size(); ++i) {  // 遍历每个学生
                 for (size_t j = 0; j < students[i].selectedCourses.size(); ++j) {  // 遍历每个学生选择的课程
@@ -205,7 +214,7 @@ public:
 
     //加载选课信息，从selection文件中读取，根据students中的id
     void loadCourseSelection(vector<StudentInfo>& students, const vector<Course>& allCourses, const string& filename) {
-        ifstream file(filename);
+        ifstream file("selection.txt");
         string line;
         while (getline(file, line)) {
             stringstream ss(line);
@@ -315,9 +324,11 @@ int main() {
                                 switch (choice) {
                                     case 1:
                                         student.addCourse(allCourses, students[0]);
+                                        student.saveCourseSelection(students, selectionFilename);
                                         break;
                                     case 2:
                                         student.deleteCourse(allCourses,students[0]);
+                                        student.saveCourseSelection(students, selectionFilename);
                                         break;
                                     case 3:
                                         student.displayMyCourses(students[0]);
