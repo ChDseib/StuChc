@@ -143,75 +143,63 @@ public:
     }
     //添加课程  先显示所有可选课程 选择后需判断冲突
     void addCourse(vector<Course>& allCourses, StudentInfo& student) {
-<<<<<<< HEAD
-        for(int i = 1; i < allCourses.size(); i++) {
+        for (int i = 1; i < allCourses.size(); i++) {
             cout << i << ": " << allCourses[i].courseName << " by " << allCourses[i].teacher << endl;
         }
         // 让学生选择课程
         int choice;
-        cout << "输入你想添加课程的序号： ";
-=======
-        for(int i = 0; i < allCourses.size(); i++) {
-            cout << i << ": " << allCourses[i].courseName << "      授课教师： " << allCourses[i].teacher << endl;
-        }
-        // 让学生选择课程
-        int choice;
         cout << "请输入想要添加的课程编号: ";
->>>>>>> origin/main
         cin >> choice;
+        // 在添加课程之前，先检查selection.txt文件中是否已存在所选课程
+        std::ifstream file("selection.txt");
+        std::string line;
+        bool courseExists = false;
+        if (file.is_open()) {
+            while (getline(file, line)) {
+                if (line.find(allCourses[choice].courseName) != std::string::npos) {
+                    courseExists = true;
+                    break;
+                }
+            }
+            file.close();
+        }
+        if (courseExists) {
+            cout << "已有课程，选课失败" << endl;
+            return;
+        }
         // 检查所选课程是否已经在学生的课程列表中
-        for(int i = 1; i < student.selectedCourses.size(); i++) {
-            if(student.selectedCourses[i].courseName == allCourses[choice].courseName) {
+        for (int i = 1; i < student.selectedCourses.size(); i++) {
+            if (student.selectedCourses[i].courseName == allCourses[choice].courseName) {
                 cout << "你已经选了这门课，请再次尝试" << endl;
                 return;
             }
         }
         // 将所选课程添加到学生的课程列表中
-        if(choice >= 0 && choice < allCourses.size()) {
+        if (choice >= 0 && choice < allCourses.size()) {
             student.selectedCourses.push_back(allCourses[choice]);
-<<<<<<< HEAD
             cout << "选课成功!" << endl;
         } else {
             cout << "无效选择，再次尝试" << endl;
-=======
-            cout << "课程添加成功!" << endl;
-        } else {
-            cout << "选择无效，请重试" << endl;
->>>>>>> origin/main
         }
     }
 
-
     void deleteCourse(vector<Course>& allCourses, StudentInfo& student) {
-        for(int i = 0; i < student.selectedCourses.size(); i++) {
-<<<<<<< HEAD
+        int i;
+        for(i = 0; i < student.selectedCourses.size(); i++) {
             cout << i+1 << ": " << student.selectedCourses[i].courseName << " by " << student.selectedCourses[i].teacher << endl;
         }
         int choice;
         cout << "输入你想删除课程的序号： ";
-=======
-            cout << i << ": " << student.selectedCourses[i].courseName << "       授课教师： " << student.selectedCourses[i].teacher << endl;
-        }
-        int choice;
-        cout << "请输入想要删除的课程编号: ";
->>>>>>> origin/main
         cin >> choice;
         choice=choice-1;
         // Check if the choice is within the range of selected courses
         if(choice >= 1 && choice < student.selectedCourses.size()) {
             student.selectedCourses.erase(student.selectedCourses.begin() + choice);
-<<<<<<< HEAD
-            cout << "删课成功!" << endl;
-        } else {
-            cout << "无效选择，再次尝试." << endl;
-=======
             cout << "选课删除成功!" << endl;
         } else {
             cout << "选择无效，请重试。" << endl;
->>>>>>> origin/main
         }
     }
-
     //显示学生的所选信息
     void displayMyCourses(const StudentInfo& student) const {
         std::cout << "学生 " << student.username << " 所选的课程有：\n";  //打印出学生的名字
@@ -220,7 +208,6 @@ public:
                       << '\n';   //遍历课程列表，打印出每一门课程的名称
         }
     }
-
     //保存选课信息 格式下面有讲
     void saveCourseSelection(const vector<StudentInfo>& students, const string& filename) const {
         ofstream file("selection.txt");  // 创建一个输出文件流对象
