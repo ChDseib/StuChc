@@ -143,12 +143,21 @@ public:
     }
     //添加课程  先显示所有可选课程 选择后需判断冲突
     void addCourse(vector<Course>& allCourses, StudentInfo& student) {
+<<<<<<< HEAD
         for(int i = 1; i < allCourses.size(); i++) {
             cout << i << ": " << allCourses[i].courseName << " by " << allCourses[i].teacher << endl;
         }
         // 让学生选择课程
         int choice;
         cout << "输入你想添加课程的序号： ";
+=======
+        for(int i = 0; i < allCourses.size(); i++) {
+            cout << i << ": " << allCourses[i].courseName << "      授课教师： " << allCourses[i].teacher << endl;
+        }
+        // 让学生选择课程
+        int choice;
+        cout << "请输入想要添加的课程编号: ";
+>>>>>>> origin/main
         cin >> choice;
         // 检查所选课程是否已经在学生的课程列表中
         for(int i = 1; i < student.selectedCourses.size(); i++) {
@@ -160,27 +169,46 @@ public:
         // 将所选课程添加到学生的课程列表中
         if(choice >= 0 && choice < allCourses.size()) {
             student.selectedCourses.push_back(allCourses[choice]);
+<<<<<<< HEAD
             cout << "选课成功!" << endl;
         } else {
             cout << "无效选择，再次尝试" << endl;
+=======
+            cout << "课程添加成功!" << endl;
+        } else {
+            cout << "选择无效，请重试" << endl;
+>>>>>>> origin/main
         }
     }
 
 
     void deleteCourse(vector<Course>& allCourses, StudentInfo& student) {
         for(int i = 0; i < student.selectedCourses.size(); i++) {
+<<<<<<< HEAD
             cout << i+1 << ": " << student.selectedCourses[i].courseName << " by " << student.selectedCourses[i].teacher << endl;
         }
         int choice;
         cout << "输入你想删除课程的序号： ";
+=======
+            cout << i << ": " << student.selectedCourses[i].courseName << "       授课教师： " << student.selectedCourses[i].teacher << endl;
+        }
+        int choice;
+        cout << "请输入想要删除的课程编号: ";
+>>>>>>> origin/main
         cin >> choice;
         choice=choice-1;
         // Check if the choice is within the range of selected courses
         if(choice >= 1 && choice < student.selectedCourses.size()) {
             student.selectedCourses.erase(student.selectedCourses.begin() + choice);
+<<<<<<< HEAD
             cout << "删课成功!" << endl;
         } else {
             cout << "无效选择，再次尝试." << endl;
+=======
+            cout << "选课删除成功!" << endl;
+        } else {
+            cout << "选择无效，请重试。" << endl;
+>>>>>>> origin/main
         }
     }
 
@@ -256,7 +284,7 @@ int main() {
             StudentInfo studentInfo; //学生信息
             size_t pos1=line.find(','); //查找第一个逗号
             size_t pos2=line.find(',', pos1+1); //查找第二个逗号
-            if (pos1!=string::npos && pos2!=string::npos) { //如果三个逗号都找到了
+            if (pos1!=string::npos && pos2!=string::npos) { //如果逗号都找到了
                 studentInfo.username=line.substr(0, pos1); //用户名
                 studentInfo.password=line.substr(pos1+1, pos2-pos1-1); //密码
                 studentInfo.major=line.substr(pos2+1); //专业
@@ -286,9 +314,11 @@ int main() {
                     switch (choice) {
                         case 1:
                             admin.addCourse(allCourses); //添加课程
+                            admin.saveToFile(allCourses, coursesFilename);//保存课程信息到文件
                             break;
                         case 2:
                             admin.deleteCourse(allCourses);//删除课程
+                            admin.saveToFile(allCourses, coursesFilename);//保存课程信息到文件
                             break;
                         case 3:
                             admin.displayAllCourses(allCourses);//显示所有课程
