@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <algorithm>
 
 using namespace std;
 
@@ -20,14 +21,23 @@ struct StudentInfo {
 };
 
 class Admin {
+private:
+    int nextCourseId;
+    void reassignCourseCodes(vector<Course>& courses) {
+        for (size_t i = 0; i < courses.size(); ++i) {
+            courses[i].courseCode = to_string(i + 1);
+        }
+    }
 public:
+    Admin() : nextCourseId(1) {} // 构造函数初始化课程编号为1
+
+    // 添加课程信息 编号/名称/任课老师
     void addCourse(vector<Course>& courses) {
         Course course;
-        cout << "请输入课程编号：";
-        cin >> course.courseCode;
-        cout << "请输入课程名称：";
+        course.courseCode=to_string(nextCourseId++); // 使用当前编号，然后递增
+        cout<<"请输入课程名称：";
         cin >> course.courseName;
-        cout << "请输入任课老师：";
+        cout<<"请输入任课老师：";
         cin >> course.teacher;
         courses.push_back(course);
     }
@@ -36,40 +46,48 @@ public:
         string courseCode;
         cout << "请输入要删除的课程编号：";
         cin >> courseCode;
-        for (size_t i = 0; i < courses.size(); ++i) {
-            if (courses[i].courseCode == courseCode) {
-                courses.erase(courses.begin() + i);
-                cout << "删除成功。" << endl;
-                return;
-            }
+
+        auto it = remove_if(courses.begin(), courses.end(),
+                            [courseCode](const Course& course) {
+                                return course.courseCode == courseCode;
+                            });
+
+        if (it != courses.end()) {
+            courses.erase(it, courses.end());
+            cout << "删除成功。" << endl;
+
+            // 重新分配课程编号
+            reassignCourseCodes(courses);
+        } else {
+            cout << "未找到课程编号为" << courseCode << "的课程。" << endl;
         }
-        cout << "未找到课程编号为" << courseCode << "的课程。" << endl;
     }
 
-    void displayAllCourses(const vector<Course>& courses) const {
-        cout << "课程编号\t课程名称\t任课老师" << endl;
-        for (size_t i = 0; i < courses.size(); ++i) {
-            cout << courses[i].courseCode << "\t" << courses[i].courseName << "\t" << courses[i].teacher << endl;
+
+    void displayAllCourses(  vector<Course>& courses)   {
+        cout<<"课程编号\t课程名称\t任课老师"<<endl;
+        for (int i=0; i<courses.size(); ++i) {
+            cout<<courses[i].courseCode<<"\t"<<courses[i].courseName<<"\t"<<courses[i].teacher<<endl;
         }
     }
 
-    void saveToFile(const vector<Course>& courses, const string& filename) const {
+    void saveToFile(  vector<Course>& courses,   string& filename)   {
         ofstream file(filename);
         if (file.is_open()) {
-            for (size_t i = 0; i < courses.size(); ++i) {
-                file << courses[i].courseCode << "," << courses[i].courseName << "," << courses[i].teacher << endl;
+            for (int i=0; i<courses.size(); ++i) {
+                file<<courses[i].courseCode<<","<<courses[i].courseName<<","<<courses[i].teacher<<endl;
             }
             file.close();
-            cout << "保存成功。" << endl;
+            cout<<"保存成功。"<<endl;
         } else {
-            cout << "无法打开文件" << filename << "进行保存。" << endl;
+            cout<<"无法打开文件"<<filename<<"进行保存。"<<endl;
         }
     }
 
     void loadFromFile(vector<Course>& courses, const string& filename) {
-        ifstream file(filename);
+        ifstream file(filename); //课程信息  课程编号/课程名/授课教师
         if (file.is_open()) {
-            courses.clear();
+            courses.clear();//
             string line;
             while (getline(file, line)) {
                 Course course;
@@ -80,6 +98,10 @@ public:
                     course.courseName = line.substr(pos1 + 1, pos2 - pos1 - 1);
                     course.teacher = line.substr(pos2 + 1);
                     courses.push_back(course);
+
+                    // 更新最大课程编号
+                    int courseId = stoi(course.courseCode);
+                    nextCourseId = max(nextCourseId, courseId + 1);
                 }
             }
             file.close();
@@ -91,15 +113,17 @@ public:
 };
 
 class Student {
+private:
+    int nextSelectionId; // 记录学生选课的下一个编号
 public:
-    bool login(const vector<StudentInfo>& students, string& username, string& password, int& stuid) {
-        cout << "请输入用户名：";
+    bool login(  vector<StudentInfo>& students, string& username, string& password, int& stuid) {
+        cout<<"请输入用户名：";
         cin >> username;
-        cout << "请输入密码：";
+        cout<<"请输入密码：";
         cin >> password;
-        for (int i = 0; i < students.size(); ++i) {
+        for (int i=0; i<students.size(); ++i) {
             if ((students[i].username == username) && (students[i].password == password)) {
-                stuid = i;
+                stuid=i;
                 return true;
             }
         }
@@ -108,107 +132,119 @@ public:
 
     void registerStudent(vector<StudentInfo>& students) {
         StudentInfo student;
-        cout << "请输入用户名：";
+        cout<<"请输入用户名：";
         cin >> student.username;
-        cout << "请输入密码：";
+        cout<<"请输入密码：";
         cin >> student.password;
-        cout << "请输入专业：";
+        cout<<"请输入专业：";
         cin >> student.major;
         students.push_back(student);
     }
 
-    void saveToFile(const vector<StudentInfo>& students, const string& filename) const {
+    void saveToFile(  vector<StudentInfo>& students,   string& filename)   {
         ofstream file(filename);
         if (file.is_open()) {
-            for (size_t i = 0; i < students.size(); ++i) {
-                file << students[i].username << "," << students[i].password << "," << students[i].major << endl;
+            for (int i=0; i<students.size(); ++i) {
+                file<<students[i].username<<","<<students[i].password<<","<<students[i].major<<endl;
             }
             file.close();
-            cout << "保存成功。" << endl;
+            cout<<"保存成功。"<<endl;
         } else {
-            cout << "无法打开文件" << filename << "进行保存。" << endl;
+            cout<<"无法打开文件"<<filename<<"进行保存。"<<endl;
         }
     }
 
-    void addCourse(vector<Course>& allCourses, StudentInfo& student) {
-        for (int i = 0; i < allCourses.size(); i++) {
-            cout << i << ": " << allCourses[i].courseName << " by " << allCourses[i].teacher << endl;
-        }
-        int choice;
-        cout << "请输入想要添加的课程编号: ";
-        cin >> choice;
+    Student() : nextSelectionId(1) {} // 构造函数初始化选课编号为1
 
+    // 添加课程 先显示所有可选课程 选择后需判断冲突
+    void addCourse(vector<Course>& allCourses, StudentInfo& student) {
+        // ...
+        int choice;
+        cout<<"请输入想要添加的课程编号: ";
+        cin >> choice;
+        choice--;
+        // 在添加课程之前，先检查selection.txt文件中是否已存在所选课程
         std::ifstream file("selection.txt");
         std::string line;
-        bool courseExists = false;
+        bool courseExists=false;
         if (file.is_open()) {
             while (getline(file, line)) {
                 if (line.find(allCourses[choice].courseName) != std::string::npos) {
-                    courseExists = true;
+                    courseExists=true;
                     break;
                 }
             }
             file.close();
         }
-        if (courseExists) {
-            cout << "已有课程，选课失败" << endl;
-            return;
+
+        // 检查所选课程是否已经在学生的课程列表中
+        for (int i=1; i<student.selectedCourses.size(); i++) {
+            if (student.selectedCourses[i].courseName == allCourses[choice].courseName) {
+                cout<<"你已经选了这门课，请再次尝试"<<endl;
+                return;
+            }
         }
 
-
-
-        if (choice >= 0 && choice < allCourses.size()) {
+        // 将所选课程添加到学生的课程列表中，并使用递增的编号
+        if (choice >= 0 && choice<allCourses.size()) {
             student.selectedCourses.push_back(allCourses[choice]);
-            cout << "选课成功!" << endl;
+            cout<<"选课成功!"<<endl;
+
+            // 更新选课编号
+            student.selectedCourses.back().courseCode=to_string(nextSelectionId++);
         } else {
-            cout << "无效选择，再次尝试" << endl;
+            cout<<"无效选择，再次尝试"<<endl;
         }
     }
 
+    // 删除课程
     void deleteCourse(vector<Course>& allCourses, StudentInfo& student) {
         int i;
-        for (i = 0; i < student.selectedCourses.size(); i++) {
-            cout << i + 1 << ": " << student.selectedCourses[i].courseName << " by " << student.selectedCourses[i].teacher << endl;
+        for(i=0; i<student.selectedCourses.size(); i++) {
+            cout<<i+1<<": "<<student.selectedCourses[i].courseName<<" by "<<student.selectedCourses[i].teacher<<endl;
         }
+
         int choice;
-        cout << "输入你想删除课程的序号： ";
+        cout<<"输入你想删除课程的序号： ";
         cin >> choice;
-        choice = choice - 1;
+        choice=choice - 1;
 
-        if (choice >= 0 && choice < student.selectedCourses.size()) {
+        if(choice >= 0 && choice<student.selectedCourses.size()) {
             student.selectedCourses.erase(student.selectedCourses.begin() + choice);
-            cout << "选课删除成功!" << endl;
+            cout<<"选课删除成功!"<<endl;
         } else {
-            cout << "选择无效，请重试。" << endl;
+            cout<<"选择无效，请重试。"<<endl;
         }
     }
 
-    void displayMyCourses(const StudentInfo& student) const {
-        std::cout << "学生 " << student.username << " 所选的课程有：\n";
-        for (const auto& course : student.selectedCourses) {
-            std::cout << "课程名称: " << course.courseName << ", 课程代码: " << course.courseCode << '\n';
+
+    void displayMyCourses(  StudentInfo& student)   {
+        std::cout<<"学生 "<<student.username<<" 所选的课程有：\n";
+        for (  auto& course : student.selectedCourses) {
+            std::cout<<"课程名称: "<<course.courseName<<", 课程代码: "<<course.courseCode<<'\n';
         }
     }
 
-    void saveCourseSelection(const vector<StudentInfo>& students, const string& filename) const {
+    void saveCourseSelection(  vector<StudentInfo>& students,   string& filename)   {
         ofstream file("selection.txt");
+        int m=0;
         if (file.is_open()) {
-            for (size_t i = 0; i < students.size(); ++i) {
-                for (size_t j = 0; j < students[i].selectedCourses.size(); ++j) {
-                    file << students[i].username << ","
-                         << students[i].selectedCourses[j].courseCode << ","
-                         << students[i].selectedCourses[j].courseName << ","
-                         << students[i].selectedCourses[j].teacher << endl;
+            for (int i=0; i<students.size(); ++i) {
+                for (int j=0; j<students[i].selectedCourses.size(); ++j) {
+                    file<<students[i].username<<","
+                        <<students[i].selectedCourses[j].courseCode<<","
+                        <<students[i].selectedCourses[j].courseName<<","
+                        <<students[i].selectedCourses[j].teacher<<endl;
                 }
             }
             file.close();
-            cout << "保存成功。" << endl;
+            cout<<"保存成功。"<<endl;
         } else {
-            cout << "无法打开文件" << filename << "进行保存。" << endl;
+            cout<<"无法打开文件"<<filename<<"进行保存。"<<endl;
         }
     }
 
-    void loadCourseSelection(vector<StudentInfo>& students, const vector<Course>& allCourses, const string& filename) {
+    void loadCourseSelection(vector<StudentInfo>& students,  vector<Course>& allCourses,   string& filename) {
         ifstream file("selection.txt");
         string line;
         while (getline(file, line)) {
@@ -219,7 +255,7 @@ public:
 
             for (auto& student : students) {
                 if (student.username == id) {
-                    for (const auto& course : allCourses) {
+                    for (  auto& course : allCourses) {
                         if (course.courseCode == courseCode) {
                             student.selectedCourses.push_back(course);
                             break;
@@ -238,9 +274,9 @@ int main() {
     vector<StudentInfo> students;
     Admin admin;
     Student student;
-    const string coursesFilename = "courses.txt";
-    const string studentsFilename = "students.txt";
-    const string selectionFilename = "selection.txt";
+      string coursesFilename="courses.txt";
+      string studentsFilename="students.txt";
+      string selectionFilename="selection.txt";
     admin.loadFromFile(allCourses, coursesFilename);
     ifstream studentFile(studentsFilename);
     if (studentFile.is_open()) {
@@ -248,40 +284,68 @@ int main() {
         string line;
         while (getline(studentFile, line)) {
             StudentInfo studentInfo;
-            size_t pos1 = line.find(',');
-            size_t pos2 = line.find(',', pos1 + 1);
+            int pos1=line.find(',');
+            int pos2=line.find(',', pos1 + 1);
             if (pos1 != string::npos && pos2 != string::npos) {
-                studentInfo.username = line.substr(0, pos1);
-                studentInfo.password = line.substr(pos1 + 1, pos2 - pos1 - 1);
-                studentInfo.major = line.substr(pos2 + 1);
+                studentInfo.username=line.substr(0, pos1);
+                studentInfo.password=line.substr(pos1 + 1, pos2 - pos1 - 1);
+                studentInfo.major=line.substr(pos2 + 1);
                 students.push_back(studentInfo);
             }
         }
         studentFile.close();
-        cout << "从文件" << studentsFilename << "中读取学生信息成功。" << endl;
+        cout<<"从文件"<<studentsFilename<<"中读取学生信息成功。"<<endl;
     } else {
-        cout << "无法打开文件" << studentsFilename << "进行读取。" << endl;
+        cout<<"无法打开文件"<<studentsFilename<<"进行读取。"<<endl;
     }
 
     student.loadCourseSelection(students, allCourses, selectionFilename);
 
     while (true) {
-        cout << "\n1. 登录为管理员\n2. 登录为学生\n3. 退出\n选择操作（1/2/3）:";
+        cout<<"\n1. 登录为管理员\n2. 登录为学生\n3. 退出\n选择操作（1/2/3）:";
         int choice;
         cin >> choice;
+
+        if (cin.fail()) {
+            cout << "输入错误，请输入数字。" << endl;
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            continue;        }
+        if (choice < 1 || choice > 3) {
+            cout << "输入错误，请输入范围内的选项。" << endl;
+            continue;
+        }
+
         switch (choice) {
             case 1: {
-                cout << "\n管理员登录成功！" << endl;
+                cout<<"请输入管理员密码";
+                int password;
+                cin >> password;
+                if (password != 123456) {
+                    cout<<"密码错误，登录失败。"<<endl;
+                    break;
+                } else{
+                    cout<<"密码正确，登录成功。"<<endl;
+                }
                 while (true) {
-                    cout << "\n1. 添加课程\n2. 删除课程\n3. 显示所有课程\n4. 保存课程信息到文件\n5. 返回上一级\n选择操作（1/2/3/4/5）:";
+                    cout<<"\n1. 添加课程\n2. 删除课程\n3. 显示所有课程\n4. 保存课程信息到文件\n5. 返回上一级\n选择操作（1/2/3/4/5）:";
                     cin >> choice;
-
+                    if (cin.fail()) {
+                        cout << "输入错误，请输入数字。" << endl;
+                        cin.clear();
+                        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                        continue;        }
+                    if (choice < 1 || choice > 5) {
+                        cout << "输入错误，请输入范围内的选项。" << endl;
+                        continue;
+                    }
                     switch (choice) {
                         case 1:
                             admin.addCourse(allCourses);
                             admin.saveToFile(allCourses, coursesFilename);
                             break;
                         case 2:
+                            admin.displayAllCourses(allCourses);
                             admin.deleteCourse(allCourses);
                             admin.saveToFile(allCourses, coursesFilename);
                             break;
@@ -292,10 +356,10 @@ int main() {
                             admin.saveToFile(allCourses, coursesFilename);
                             break;
                         case 5:
-                            cout << "\n返回上一级。\n";
+                            cout<<"\n返回上一级。\n";
                             break;
                         default:
-                            cout << "无效的选项。" << endl;
+                            cout<<"无效的选项。"<<endl;
                     }
 
                     if (choice == 5) {
@@ -306,19 +370,38 @@ int main() {
             }
 
             case 2: {
-                cout << "\n1. 登录\n2. 注册\n3. 返回上一级\n选择操作（1/2/3）:";
+                cout<<"\n1. 登录\n2. 注册\n3. 返回上一级\n选择操作（1/2/3）:";
                 cin >> choice;
+                if (cin.fail()) {
+                    cout << "输入错误，请输入数字。" << endl;
+                    cin.clear();
+                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    continue;        }
+                if (choice < 1 || choice > 3) {
+                    cout << "输入错误，请输入范围内的选项。" << endl;
+                    continue;
+                }
                 switch (choice) {
                     case 1: {
                         string username, password;
                         int stuid;
                         if (student.login(students, username, password, stuid)) {
-                            cout << "\n学生登录成功！" << endl;
+                            cout<<"\n学生登录成功！"<<endl;
                             while (true) {
-                                cout << "\n1. 添加课程\n2. 删除课程\n3. 显示我的课程\n4. 返回上一级\n选择操作（1/2/3/4）:";
+                                cout<<"\n1. 添加课程\n2. 删除课程\n3. 显示我的课程\n4. 返回上一级\n选择操作（1/2/3/4）:";
                                 cin >> choice;
+                                if (cin.fail()) {
+                                    cout << "输入错误，请输入数字。" << endl;
+                                    cin.clear();
+                                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                                    continue;        }
+                                if (choice < 1 || choice > 4) {
+                                    cout << "输入错误，请输入范围内的选项。" << endl;
+                                    continue;
+                                }
                                 switch (choice) {
                                     case 1:
+                                        admin.displayAllCourses(allCourses);
                                         student.addCourse(allCourses, students[stuid]);
                                         student.saveCourseSelection(students, selectionFilename);
                                         break;
@@ -330,17 +413,17 @@ int main() {
                                         student.displayMyCourses(students[stuid]);
                                         break;
                                     case 4:
-                                        cout << "\n返回上一级。\n";
+                                        cout<<"\n返回上一级。\n";
                                         break;
                                     default:
-                                        cout << "无效的选项。" << endl;
+                                        cout<<"无效的选项。"<<endl;
                                 }
                                 if (choice == 4) {
                                     break;
                                 }
                             }
                         } else {
-                            cout << "登录失败，用户名或密码错误。" << endl;
+                            cout<<"登录失败，用户名或密码错误。"<<endl;
                         }
                         break;
                     }
@@ -349,10 +432,10 @@ int main() {
                         student.saveToFile(students, studentsFilename);
                         break;
                     case 3:
-                        cout << "\n返回上一级。\n";
+                        cout<<"\n返回上一级。\n";
                         break;
                     default:
-                        cout << "无效的选项。" << endl;
+                        cout<<"无效的选项。"<<endl;
                 }
                 break;
             }
@@ -361,10 +444,10 @@ int main() {
                 admin.saveToFile(allCourses, coursesFilename);
                 student.saveToFile(students, studentsFilename);
                 student.saveCourseSelection(students, selectionFilename);
-                cout << "\n退出系统。" << endl;
+                cout<<"\n退出系统。"<<endl;
                 return 0;
             default:
-                cout << "无效的选项。" << endl;
+                cout<<"无效的选项。"<<endl;
         }
     }
 

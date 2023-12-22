@@ -4,7 +4,9 @@
 CMakeFiles/StuChc.dir/main.cpp.obj: D:/project/gitcc/StuChc/StuChc/StuChc/main.cpp \
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed/limits.h \
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed/syslimits.h \
+  D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/algorithm \
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward/binders.h \
+  D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/algorithmfwd.h \
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/alloc_traits.h \
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/allocator.h \
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/basic_ios.h \
@@ -42,21 +44,25 @@ CMakeFiles/StuChc.dir/main.cpp.obj: D:/project/gitcc/StuChc/StuChc/StuChc/main.c
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/range_access.h \
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/sstream.tcc \
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/std_abs.h \
+  D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_algo.h \
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_algobase.h \
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_bvector.h \
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_construct.h \
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_function.h \
+  D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_heap.h \
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_iterator.h \
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_iterator_base_funcs.h \
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_iterator_base_types.h \
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_pair.h \
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_relops.h \
+  D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_tempbuf.h \
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_uninitialized.h \
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_vector.h \
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/streambuf.tcc \
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/streambuf_iterator.h \
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/string_view.tcc \
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stringfwd.h \
+  D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/uniform_int_dist.h \
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/vector.tcc \
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cctype \
   D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cerrno \
@@ -148,8 +154,6 @@ CMakeFiles/StuChc.dir/main.cpp.obj: D:/project/gitcc/StuChc/StuChc/StuChc/main.c
   D:/app/mingw/mingw64/x86_64-w64-mingw32/include/wctype.h
 
 
-D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/basic_ios.h:
-
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_iterator_base_funcs.h:
 
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_iterator.h:
@@ -158,7 +162,15 @@ D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/codecvt.h
 
 D:/project/gitcc/StuChc/StuChc/StuChc/main.cpp:
 
-D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/basic_ios.tcc:
+D:/app/mingw/mingw64/x86_64-w64-mingw32/include/sys/timeb.h:
+
+D:/app/mingw/mingw64/x86_64-w64-mingw32/include/_mingw_mac.h:
+
+D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/algorithm:
+
+D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/ptr_traits.h:
+
+D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/functional_hash.h:
 
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/std_abs.h:
 
@@ -168,9 +180,11 @@ D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/localefwd
 
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed/syslimits.h:
 
-D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cstdint:
-
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward/binders.h:
+
+D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_iterator_base_types.h:
+
+D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/algorithmfwd.h:
 
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/alloc_traits.h:
 
@@ -179,6 +193,10 @@ D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_vecto
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32/bits/gthr.h:
 
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/allocator.h:
+
+D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/basic_ios.h:
+
+D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/basic_ios.tcc:
 
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/cxxabi_init_exception.h:
 
@@ -199,10 +217,6 @@ D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_funct
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/exception_defines.h:
 
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/cpp_type_traits.h:
-
-D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32/bits/c++io.h:
-
-D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cstdio:
 
 D:/app/mingw/mingw64/x86_64-w64-mingw32/include/stdlib.h:
 
@@ -228,14 +242,6 @@ D:/app/mingw/mingw64/x86_64-w64-mingw32/include/_mingw_print_push.h:
 
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/functexcept.h:
 
-D:/app/mingw/mingw64/x86_64-w64-mingw32/include/sys/timeb.h:
-
-D:/app/mingw/mingw64/x86_64-w64-mingw32/include/_mingw_mac.h:
-
-D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/ptr_traits.h:
-
-D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/functional_hash.h:
-
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/string:
 
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/streambuf_iterator.h:
@@ -247,8 +253,6 @@ D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/istream.t
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/locale_classes.tcc:
 
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/locale_facets.h:
-
-D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/clocale:
 
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/memoryfwd.h:
 
@@ -266,17 +270,25 @@ D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/range_acc
 
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/sstream.tcc:
 
+D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/vector.tcc:
+
+D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_algo.h:
+
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/stddef.h:
 
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/stdexcept:
 
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_bvector.h:
 
-D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_iterator_base_types.h:
+D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_heap.h:
 
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_pair.h:
 
+D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/uniform_int_dist.h:
+
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_relops.h:
+
+D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_tempbuf.h:
 
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_uninitialized.h:
 
@@ -284,15 +296,21 @@ D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/streambuf
 
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/string_view.tcc:
 
-D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cstdlib:
-
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stringfwd.h:
-
-D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/vector.tcc:
 
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cctype:
 
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cerrno:
+
+D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/clocale:
+
+D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cstdint:
+
+D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32/bits/c++io.h:
+
+D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cstdio:
+
+D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cstdlib:
 
 D:/app/mingw/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/cwchar:
 
