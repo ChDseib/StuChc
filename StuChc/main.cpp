@@ -23,11 +23,6 @@ struct StudentInfo {
 class Admin {
 private:
     int nextCourseId;
-    void reassignCourseCodes(vector<Course>& courses) {
-        for (size_t i = 0; i < courses.size(); ++i) {
-            courses[i].courseCode = to_string(i + 1);
-        }
-    }
 public:
     Admin() : nextCourseId(1) {} // 构造函数初始化课程编号为1
 
@@ -53,11 +48,8 @@ public:
                             });
 
         if (it != courses.end()) {
-            courses.erase(it, courses.end());
+            courses.erase(it);
             cout << "删除成功。" << endl;
-
-            // 重新分配课程编号
-            reassignCourseCodes(courses);
         } else {
             cout << "未找到课程编号为" << courseCode << "的课程。" << endl;
         }
@@ -159,8 +151,14 @@ public:
     // 添加课程 先显示所有可选课程 选择后需判断冲突
     void addCourse(vector<Course>& allCourses, StudentInfo& student) {
         // ...
+        cout << "可选课程如下：" << endl;
+        cout << "序号\t课程编号\t课程名称\t任课老师" << endl;
+        for (int i = 0; i < allCourses.size(); ++i) {
+            cout << i + 1 << "\t" << allCourses[i].courseCode << "\t" << allCourses[i].courseName << "\t" << allCourses[i].teacher << endl;
+        }
+
         int choice;
-        cout<<"请输入想要添加的课程编号: ";
+        cout << "请输入想要添加的课程序号: ";
         cin >> choice;
         choice--;
         // 在添加课程之前，先检查selection.txt文件中是否已存在所选课程
@@ -185,16 +183,18 @@ public:
             }
         }
 
-        // 将所选课程添加到学生的课程列表中，并使用递增的编号
-        if (choice >= 0 && choice<allCourses.size()) {
+        // 将所选课程添加到学生的课程列表中，使用课程代码作为编号
+        if (choice >= 0 && choice < allCourses.size()) {
             student.selectedCourses.push_back(allCourses[choice]);
-            cout<<"选课成功!"<<endl;
+            cout << "选课成功!" << endl;
 
-            // 更新选课编号
-            student.selectedCourses.back().courseCode=to_string(nextSelectionId++);
+            // 使用课程代码作为选课编号
+            student.selectedCourses.back().courseCode = allCourses[choice].courseCode;
         } else {
-            cout<<"无效选择，再次尝试"<<endl;
+            cout << "无效选择，请再次尝试" << endl;
         }
+
+
     }
 
     // 删除课程
@@ -225,24 +225,25 @@ public:
         }
     }
 
-    void saveCourseSelection(  vector<StudentInfo>& students,   string& filename)   {
-        ofstream file("selection.txt");
-        int m=0;
+    void saveCourseSelection(vector<StudentInfo>& students, string& filename) {
+        ofstream file(filename);
+        int m = 0;
         if (file.is_open()) {
-            for (int i=0; i<students.size(); ++i) {
-                for (int j=0; j<students[i].selectedCourses.size(); ++j) {
-                    file<<students[i].username<<","
-                        <<students[i].selectedCourses[j].courseCode<<","
-                        <<students[i].selectedCourses[j].courseName<<","
-                        <<students[i].selectedCourses[j].teacher<<endl;
+            for (int i = 0; i < students.size(); ++i) {
+                for (int j = 0; j < students[i].selectedCourses.size(); ++j) {
+                    file << students[i].username << ","
+                         << students[i].selectedCourses[j].courseCode << ","
+                         << students[i].selectedCourses[j].courseName << ","
+                         << students[i].selectedCourses[j].teacher << endl;
                 }
             }
             file.close();
-            cout<<"保存成功。"<<endl;
+            cout << "保存成功。" << endl;
         } else {
-            cout<<"无法打开文件"<<filename<<"进行保存。"<<endl;
+            cout << "无法打开文件" << filename << "进行保存。" << endl;
         }
     }
+
 
     void loadCourseSelection(vector<StudentInfo>& students,  vector<Course>& allCourses,   string& filename) {
         ifstream file("selection.txt");
@@ -274,9 +275,9 @@ int main() {
     vector<StudentInfo> students;
     Admin admin;
     Student student;
-      string coursesFilename="courses.txt";
-      string studentsFilename="students.txt";
-      string selectionFilename="selection.txt";
+    string coursesFilename="courses.txt";
+    string studentsFilename="students.txt";
+    string selectionFilename="selection.txt";
     admin.loadFromFile(allCourses, coursesFilename);
     ifstream studentFile(studentsFilename);
     if (studentFile.is_open()) {
@@ -401,7 +402,6 @@ int main() {
                                 }
                                 switch (choice) {
                                     case 1:
-                                        admin.displayAllCourses(allCourses);
                                         student.addCourse(allCourses, students[stuid]);
                                         student.saveCourseSelection(students, selectionFilename);
                                         break;
