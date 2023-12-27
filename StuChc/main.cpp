@@ -30,16 +30,31 @@ public:
     void addCourse(vector<Course>& courses) {
         Course course;
         course.courseCode=to_string(nextCourseId++); // 使用当前编号，然后递增
-        cout<<"请输入课程名称：";
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t  当前操作\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t   请输入课程名称\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+       // cout<<"请输入课程名称：";
         cin>>course.courseName;
-        cout<<"请输入任课老师：";
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t   当前操作\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t   请输入任课老师\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+       // cout<<"请输入任课老师：";
+
         cin>>course.teacher;
         courses.push_back(course);
     }
 
     void deleteCourse(vector<Course>& courses) {
         string courseCode;
-        cout<<"请输入要删除的课程编号：";
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t  当前操作\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t请输入要删除的课程编号\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        //cout<<"请输入要删除的课程编号：";
         cin>>courseCode;
 
         auto it=remove_if(courses.begin(), courses.end(),
@@ -49,7 +64,12 @@ public:
 
         if (it!=courses.end()) {
             courses.erase(it);
-            cout<<"删除成功。"<<endl;
+            printf("\n");
+            printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+            printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t删除成功!\t\t\t\t\t\t|\n");
+            printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+            printf("\n");
+            //cout<<"删除成功。"<<endl;
         } else {
             cout<<"未找到课程编号为"<<courseCode<<"的课程。"<<endl;
         }
@@ -57,10 +77,17 @@ public:
 
 
     void displayAllCourses(  vector<Course>& courses)   {
-        cout<<"课程编号\t课程名称\t任课老师"<<endl;
+
+        printf("\n\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t   全部课程\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\"课程编号\t\t课程名称\t\t任课老师\"\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t\t\t\t\t\t\t|\n");
         for (int i=0; i<courses.size(); ++i) {
-            cout<<courses[i].courseCode<<"\t"<<courses[i].courseName<<"\t"<<courses[i].teacher<<endl;
+            cout<<"\t\t\t\t\t\t\t\t\t\t\t|\t\t   "<<courses[i].courseCode<<"\t\t"<<courses[i].courseName<<"\t\t"<<  courses[i].teacher<<"\t\t\t\t|"<<endl;
         }
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
     }
 
     void saveToFile(  vector<Course>& courses,   string& filename)   {
@@ -70,7 +97,7 @@ public:
                 file<<courses[i].courseCode<<","<<courses[i].courseName<<","<<courses[i].teacher<<endl;
             }
             file.close();
-            cout<<"保存成功。"<<endl;
+           // cout<<"1。"<<endl;
         } else {
             cout<<"无法打开文件"<<filename<<"进行保存。"<<endl;
         }
@@ -109,9 +136,19 @@ private:
     int nextSelectionId; // 记录学生选课的下一个编号
 public:
     bool login(  vector<StudentInfo>& students, string& username, string& password, int& stuid) {
-        cout<<"请输入用户名：";
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t当前操作:登录\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t请输入用户名\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        //cout<<"请输入用户名：";
         cin>>username;
-        cout<<"请输入密码：";
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t当前操作:登录\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t请输入密码\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+       // cout<<"请输入密码：";
         cin>>password;
         for (int i=0; i<students.size(); ++i) {
             if ((students[i].username==username)&&(students[i].password==password)) {
@@ -124,11 +161,26 @@ public:
 
     void registerStudent(vector<StudentInfo>& students) {
         StudentInfo student;
-        cout<<"请输入用户名：";
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t当前操作:注册\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t请输入用户名\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        //cout<<"请输入用户名：";
         cin>>student.username;
-        cout<<"请输入密码：";
+       // cout<<"请输入密码：";
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t当前操作:注册\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t请输入密码\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         cin>>student.password;
-        cout<<"请输入专业：";
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t当前操作:注册\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t请输入专业\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        //cout<<"请输入专业：";
         cin>>student.major;
         students.push_back(student);
     }
@@ -140,9 +192,14 @@ public:
                 file<<students[i].username<<","<<students[i].password<<","<<students[i].major<<endl;
             }
             file.close();
-            cout<<"保存成功。"<<endl;
+            printf("\n");
+            printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+            printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t保存成功!\t\t\t\t\t\t|\n");
+            printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+            printf("\n");
+           // cout<<"保存成功。"<<endl;
         } else {
-            cout<<"无法打开文件"<<filename<<"进行保存。"<<endl;
+            cout<<"\t\t\t\t\t"<<"无法打开文件"<<filename<<"进行保存。"<<endl;
         }
     }
 
@@ -151,14 +208,26 @@ public:
     // 添加课程 先显示所有可选课程 选择后需判断冲突
     void addCourse(vector<Course>& allCourses, StudentInfo& student) {
         // ...
-        cout<<"可选课程如下："<<endl;
-        cout<<"序号\t课程编号\t课程名称\t任课老师"<<endl;
+       // cout<<"可选课程如下："<<endl;
+        //cout<<"序号\t课程编号\t课程名称\t任课老师"<<endl;
+        printf("\n\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t   全部课程\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\"课程编号\t\t课程名称\t\t任课老师\"\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t\t\t\t\t\t\t|\n");
         for (int i=0; i < allCourses.size(); ++i) {
-            cout<<i+1<<"\t"<<allCourses[i].courseCode<<"\t"<<allCourses[i].courseName<<"\t"<<allCourses[i].teacher<<endl;
+            cout<<"\t\t\t\t\t\t\t\t\t\t\t|\t\t   "<<allCourses[i].courseCode<<"\t\t"<<allCourses[i].courseName<<"\t\t"<<  allCourses[i].teacher<<"\t\t\t\t|"<<endl;
         }
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
 
         int choice;
-        cout<<"请输入想要添加的课程序号: ";
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t当前操作:选课\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t请输入想要添加的课程序号\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        //cout<<"请输入想要添加的课程序号: ";
         cin>>choice;
         choice--;
         // 在添加课程之前，先检查selection.txt文件中是否已存在所选课程
@@ -176,9 +245,12 @@ public:
         }
 
         // 检查所选课程是否已经在学生的课程列表中
-        for (int i=1; i<student.selectedCourses.size(); i++) {
+        for (int i=0; i<student.selectedCourses.size(); i++) {
             if (student.selectedCourses[i].courseName==allCourses[choice].courseName) {
-                cout<<"你已经选了这门课，请再次尝试"<<endl;
+                printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t你已经选了这门课，请再次尝试\t\t\t\t|\n");
+                printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+               // cout<<"你已经选了这门课，请再次尝试"<<endl;
                 return;
             }
         }
@@ -186,12 +258,18 @@ public:
         // 将所选课程添加到学生的课程列表中，使用课程代码作为编号
         if (choice>=0&&choice < allCourses.size()) {
             student.selectedCourses.push_back(allCourses[choice]);
-            cout<<"选课成功!"<<endl;
+            printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+            printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t选课成功!\t\t\t\t\t\t|\n");
+            printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+           // cout<<"选课成功!"<<endl;
 
             // 使用课程代码作为选课编号
             student.selectedCourses.back().courseCode=allCourses[choice].courseCode;
         } else {
-            cout<<"无效选择，请再次尝试"<<endl;
+            printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+            printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t无效选择，请再次尝试!\t\t\t\t|\n");
+            printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+            //cout<<"无效选择，请再次尝试"<<endl;
         }
         
     }
@@ -199,28 +277,42 @@ public:
     // 删除课程
     void deleteCourse(vector<Course>& allCourses, StudentInfo& student) {
         int i;
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t当前已选课程\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         for(i=0; i<student.selectedCourses.size(); i++) {
-            cout<<i+1<<": "<<student.selectedCourses[i].courseName<<" by "<<student.selectedCourses[i].teacher<<endl;
+            cout<<"\t\t\t\t\t\t\t\t\t\t\t|"<<"\t\t\t\t"<<i+1<<": "<<student.selectedCourses[i].courseName<<" by "<<student.selectedCourses[i].teacher<<"\t\t\t\t\t|\n";
         }
 
         int choice;
-        cout<<"输入你想删除课程的序号： ";
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t输入你想删除课程的序号\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        //cout<<"输入你想删除课程的序号： ";
         cin>>choice;
         choice=choice - 1;
 
         if(choice>=0&&choice<student.selectedCourses.size()) {
             student.selectedCourses.erase(student.selectedCourses.begin()+choice);
-            cout<<"选课删除成功!"<<endl;
+            printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+            printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t选课删除成功\t\t\t\t\t|\n");
+            printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+           // cout<<"选课删除成功!"<<endl;
         } else {
-            cout<<"选择无效，请重试。"<<endl;
+            printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+            printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t  选择无效，请重试。\t\t\t\t|\n");
+            printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+            //cout<<"选择无效，请重试。"<<endl;
         }
     }
 
 
     void displayMyCourses(  StudentInfo& student)   {
-        std::cout<<"学生 "<<student.username<<" 所选的课程有：\n";
+        printf("\n\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        cout<<"\t\t\t\t\t\t\t\t\t\t\t|"<<"\t\t\t\t学生 "<<student.username<<" 所选的课程有：\t\t\t\t|\n";
         for (  auto& course : student.selectedCourses) {
-            std::cout<<"课程名称: "<<course.courseName<<", 课程代码: "<<course.courseCode<<'\n';
+            cout<<"\t"<<"\t\t\t\t\t\t\t\t\t\t|"<<"\t\t课程名称: "<<course.courseName<<"\t\t"<<" 课程代码: "<<course.courseCode<<"\t\t\t|\n";
         }
     }
 
@@ -237,7 +329,12 @@ public:
                 }
             }
             file.close();
-            cout<<"保存成功。"<<endl;
+           // printf("\n");
+          //  printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+           // printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t保存成功\t\t\t\t\t\t|\n");
+           // printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+           // printf("\n");
+            //cout<<"保存成功。"<<endl;
         } else {
             cout<<"无法打开文件"<<filename<<"进行保存。"<<endl;
         }
@@ -302,7 +399,20 @@ int main() {
     student.loadCourseSelection(students, allCourses, selectionFilename);
 
     while (true) {
-        cout<<"\n1. 登录为管理员\n2. 登录为学生\n3. 退出\n选择操作（1/2/3）:";
+        printf("\n\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t   登录界面\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t请选择登录角色\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t\t\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t1.登录为管理员\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t\t\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t2.登录为学生\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t\t\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t3.退出系统\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t选择操作（1/2/3）\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+      //  cout<<"\n1. 登录为管理员\n2. 登录为学生\n3. 退出\n选择操作（1/2/3）:";
         int choice;
         cin>>choice;
 
@@ -318,17 +428,44 @@ int main() {
 
         switch (choice) {
             case 1: {
-                cout<<"请输入管理员密码";
+                printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t   当前操作\t\t\t\t\t|\n");
+                printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t   请输入管理员密码\t\t\t\t|\n");
+                printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
                 int password;
                 cin>>password;
                 if (password!=123456) {
-                    cout<<"密码错误，登录失败。"<<endl;
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t  密码错误，登录失败。\t\t\t\t|\n");
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                    //cout<<"密码错误，登录失败。"<<endl;
                     break;
                 } else{
-                    cout<<"密码正确，登录成功。"<<endl;
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t  密码错误，登录成功。\t\t\t\t|\n");
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                  //  cout<<"密码正确，登录成功。"<<endl;
                 }
                 while (true) {
-                    cout<<"\n1. 添加课程\n2. 删除课程\n3. 显示所有课程\n4. 保存课程信息到文件\n5. 返回上一级\n选择操作（1/2/3/4/5）:";
+                    printf("\n\n");
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t 管理员界面\t\t\t\t\t|\n");
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t请选择如下功能\t\t\t\t\t|\n");
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t\t\t\t\t\t\t|\n");
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t1. 添加课程\t\t\t\t\t|\n");
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t\t\t\t\t\t\t|\n");
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t2. 删除课程\t\t\t\t\t|\n");
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t\t\t\t\t\t\t|\n");
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t3. 显示所有课程\t\t\t\t|\n");
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t\t\t\t\t\t\t|\n");
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t4. 保存课程信息到文件\t\t\t|\n");
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t\t\t\t\t\t\t|\n");
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t5. 返回上一级\t\t\t\t\t|\n");
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t选择操作（1/2/3/4/5）:\t\t\t|\n");
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                    //cout<<"\n\n2. 删除课程\n3. 显示所有课程\n4. 保存课程信息到文件\n5. 返回上一级\n选择操作（1/2/3/4/5）:";
                     cin>>choice;
                     if (cin.fail()) {
                         cout<<"输入错误，请输入数字。"<<endl;
@@ -370,15 +507,33 @@ int main() {
             }
 
             case 2: {
-                cout<<"\n1. 登录\n2. 注册\n3. 返回上一级\n选择操作（1/2/3）:";
+                printf("\n\n");
+                printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t   学生界面\t\t\t\t\t|\n");
+                printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t\t\t\t\t\t\t|\n");
+                printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t1. 登录\t\t\t\t\t\t|\n");
+                printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t\t\t\t\t\t\t|\n");
+                printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t2. 注册\t\t\t\t\t\t|\n");
+                printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t\t\t\t\t\t\t|\n");
+                printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t3. 返回上一级\t\t\t\t\t|\n");
+                printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t选择操作（1/2/3）\t\t\t\t|\n");
+                printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+             //   cout<<"\n1. 登录\n2. 注册\n3. 返回上一级\n选择操作（1/2/3）:";
                 cin>>choice;
                 if (cin.fail()) {
-                    cout<<"输入错误，请输入数字。"<<endl;
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t  输入错误，请输入数字。\t\t\t\t|\n");
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                  //  cout<<"输入错误，请输入数字。"<<endl;
                     cin.clear();
                     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                     continue;        }
                 if (choice < 1 || choice > 3) {
-                    cout<<"输入错误，请输入范围内的选项。"<<endl;
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t  输入错误，请输入范围内的选项。\t\t\t|\n");
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                   // cout<<"输入错误，请输入范围内的选项。"<<endl;
                     continue;
                 }
                 switch (choice) {
@@ -386,17 +541,40 @@ int main() {
                         string username, password;
                         int stuid;
                         if (student.login(students, username, password, stuid)) {
-                            cout<<"\n学生登录成功！"<<endl;
+                            printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                            printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t学生登录成功！\t\t\t\t\t|\n");
+                            printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                            //cout<<"\n学生登录成功！"<<endl;
                             while (true) {
-                                cout<<"\n1. 添加课程\n2. 删除课程\n3. 显示我的课程\n4. 返回上一级\n选择操作（1/2/3/4）:";
+                                printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                                printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t   学生界面\t\t\t\t\t|\n");
+                                printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                                printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t 请选择功能\t\t\t\t\t|\n");
+                                printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t\t\t\t\t\t\t|\n");
+                                printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t1. 添加课程\t\t\t\t\t|\n");
+                                printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t\t\t\t\t\t\t|\n");
+                                printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t2. 删除课程\t\t\t\t\t|\n");
+                                printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t\t\t\t\t\t\t|\n");
+                                printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t3. 显示我的课程\t\t\t\t|\n");
+                                printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t\t\t\t\t\t\t|\n");
+                                printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t4. 返回上一级\t\t\t\t\t|\n");
+                                printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t选择操作（1/2/3/4）:\t\t\t\t|\n");
+                                printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                             //   cout<<"\n1. 添加课程\n2. 删除课程\n3. 显示我的课程\n4. 返回上一级\n选择操作（1/2/3/4）:";
                                 cin>>choice;
                                 if (cin.fail()) {
-                                    cout<<"输入错误，请输入数字。"<<endl;
+                                    printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                                    printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t输入错误，请输入数字！\t\t\t\t|\n");
+                                    printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                                    //cout<<"输入错误，请输入数字。"<<endl;
                                     cin.clear();
                                     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                                     continue;        }
                                 if (choice < 1 || choice > 4) {
-                                    cout<<"输入错误，请输入范围内的选项。"<<endl;
+                                    printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                                    printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t  输入错误，请输入范围内的选项。\t\t\t|\n");
+                                    printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                                    //cout<<"输入错误，请输入范围内的选项。"<<endl;
                                     continue;
                                 }
                                 switch (choice) {
@@ -415,14 +593,20 @@ int main() {
                                         cout<<"\n返回上一级。\n";
                                         break;
                                     default:
-                                        cout<<"无效的选项。"<<endl;
+                                        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                                        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t    无效的选项。\t\t\t\t\t|\n");
+                                        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                                        //cout<<"无效的选项。"<<endl;
                                 }
                                 if (choice==4) {
                                     break;
                                 }
                             }
                         } else {
-                            cout<<"登录失败，用户名或密码错误。"<<endl;
+                            printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                            printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t登录失败，用户名或密码错误。\t\t\t|\n");
+                            printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                           // cout<<"登录失败，用户名或密码错误。"<<endl;
                         }
                         break;
                     }

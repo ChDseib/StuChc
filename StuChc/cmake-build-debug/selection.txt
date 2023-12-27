@@ -2,4 +2,6 @@ aa,1,数据结构,AA
 aa,3,软件工程,CC
 bb,2,离散数学,BB
 bb,4,需求工程,DD
-bb,5,数据库,EE
+nxn,1,数据结构,AA
+nxn,2,离散数学,BB
+wjh,1,数据结构,AA
