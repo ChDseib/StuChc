@@ -24,39 +24,37 @@ struct StudentInfo {
 class Admin {
 private:
     int nextCourseId;
-    std::mt19937 gen;
+    std::mt19937 gen;// 随机数生成器
 public:
-    Admin() : nextCourseId(1), gen(std::random_device{}()) {} // 构造函数初始化课程编号为1和随机数生成器
-// 在 Admin 类中添加以下方法用于检查课程代码的唯一性
+    Admin() : nextCourseId(1), gen(std::random_device{}()) {}// 构造函数初始化课程编号为1  初始化随机数生成器
+   //检查课程代码的唯一性
     bool isCourseCodeUnique(const vector<Course>& courses, const string& courseCode) {
         return find_if(courses.begin(), courses.end(),
                        [courseCode](const Course& course) {
                            return course.courseCode == courseCode;
-                       }) == courses.end();
+                       }) == courses.end();  // 如果课程编号在课程列表中不存在，则返回true
     }
 
     // 添加课程信息 编号/名称/任课老师
     void addCourse(vector<Course>& courses) {
         Course course;
+        //生成范围在10000000-99999999之间的随机数/八位数
         std::uniform_int_distribution<int> dis(10000000, 99999999);
-
+        // 生成唯一的课程编号
         do {
-            course.courseCode = std::to_string(dis(gen));
-        } while (!isCourseCodeUnique(courses, course.courseCode));
+            course.courseCode = std::to_string(dis(gen)); // 将随机数转换为字符串
+        } while (!isCourseCodeUnique(courses, course.courseCode)); // 检查课程编号是否唯一
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t  当前操作\t\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t   请输入课程名称\t\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-       // cout<<"请输入课程名称：";
         cin>>course.courseName;
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t   当前操作\t\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t   请输入任课老师\t\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-       // cout<<"请输入任课老师：";
-
         cin>>course.teacher;
         courses.push_back(course);
     }
@@ -67,14 +65,11 @@ public:
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t请输入要删除的课程编号\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-        //cout<<"请输入要删除的课程编号：";
         cin>>courseCode;
-
         auto it=remove_if(courses.begin(), courses.end(),
                             [courseCode]( Course& course) {
                                 return course.courseCode==courseCode;
-                            });
-
+                            });// 删除课程编号为courseCode的课程
         if (it!=courses.end()) {
             courses.erase(it);
             printf("\n");
@@ -102,15 +97,13 @@ public:
         }
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
     }
-
     void saveToFile(  vector<Course>& courses,   string& filename)   {
         ofstream file(filename);
         if (file.is_open()) {
             for (int i=0; i<courses.size(); ++i) {
                 file<<courses[i].courseCode<<","<<courses[i].courseName<<","<<courses[i].teacher<<endl;
-            }
+            }// 保存课程信息到文件
             file.close();
-           // cout<<"1。"<<endl;
         } else {
             cout<<"无法打开文件"<<filename<<"进行保存。"<<endl;
         }
@@ -119,15 +112,15 @@ public:
     void loadFromFile(vector<Course>& courses,  string& filename) {
         ifstream file(filename); //课程信息  课程编号/课程名/授课教师
         if (file.is_open()) {
-            courses.clear();//
-            string line;
+            courses.clear();// 清空课程列表
+            string line;// 逐行读取课程信息
             while (getline(file, line)) {
                 Course course;
-                int pos1=line.find(',');
-                int pos2=line.find(',', pos1+1);
+                int pos1=line.find(','); // 查找第一个逗号的位置
+                int pos2=line.find(',', pos1+1);// 查找第二个逗号的位置
                 if (pos1!=string::npos&&pos2!=string::npos) {
-                    course.courseCode=line.substr(0, pos1);
-                    course.courseName=line.substr(pos1+1, pos2 - pos1 - 1);
+                    course.courseCode=line.substr(0, pos1);// 课程编号
+                    course.courseName=line.substr(pos1+1, pos2 - pos1 - 1);// 课程名称
                     course.teacher=line.substr(pos2+1);
                     courses.push_back(course);
 
@@ -136,7 +129,7 @@ public:
                     nextCourseId=max(nextCourseId, courseId+1);
                 }
             }
-            file.close();
+            file.close();   // 从文件中读取课程信息
             cout<<"从文件"<<filename<<"中读取课程信息成功。"<<endl;
         } else {
             cout<<"无法打开文件"<<filename<<"进行读取。"<<endl;
@@ -154,20 +147,18 @@ public:
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t请输入用户名\t\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-        //cout<<"请输入用户名：";
         cin>>username;
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t当前操作:登录\t\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t请输入密码\t\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-       // cout<<"请输入密码：";
         cin>>password;
         for (int i=0; i<students.size(); ++i) {
             if ((students[i].username==username)&&(students[i].password==password)) {
                 stuid=i;
                 return true;
-            }
+            } // 检查用户名和密码是否匹配
         }
         return false;
     }
@@ -179,9 +170,7 @@ public:
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t请输入用户名\t\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-        //cout<<"请输入用户名：";
         cin>>student.username;
-       // cout<<"请输入密码：";
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t当前操作:注册\t\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
@@ -193,9 +182,8 @@ public:
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t请输入专业\t\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-        //cout<<"请输入专业：";
         cin>>student.major;
-        students.push_back(student);
+        students.push_back(student); // 将学生信息添加到学生列表中
     }
 
     void saveToFile(  vector<StudentInfo>& students,   string& filename)   {
@@ -203,14 +191,13 @@ public:
         if (file.is_open()) {
             for (int i=0; i<students.size(); ++i) {
                 file<<students[i].username<<","<<students[i].password<<","<<students[i].major<<endl;
-            }
+            }// 保存学生信息到文件
             file.close();
             printf("\n");
             printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
             printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t保存成功!\t\t\t\t\t\t|\n");
             printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
             printf("\n");
-           // cout<<"保存成功。"<<endl;
         } else {
             cout<<"\t\t\t\t\t"<<"无法打开文件"<<filename<<"进行保存。"<<endl;
         }
@@ -220,9 +207,7 @@ public:
 
     // 添加课程 先显示所有可选课程 选择后需判断冲突
     void addCourse(vector<Course>& allCourses, StudentInfo& student) {
-        // ...
-       // cout<<"可选课程如下："<<endl;
-        //cout<<"序号\t课程编号\t课程名称\t任课老师"<<endl;
+
         printf("\n\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t   全部课程\t\t\t\t\t|\n");
@@ -240,22 +225,21 @@ public:
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t请输入想要添加的课程序号\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-        //cout<<"请输入想要添加的课程序号: ";
         cin>>choice;
         choice--;
         // 在添加课程之前，先检查selection.txt文件中是否已存在所选课程
         std::ifstream file("selection.txt");
         std::string line;
-        bool courseExists=false;
-        if (file.is_open()) {
-            while (getline(file, line)) {
-                if (line.find(allCourses[choice].courseName)!=std::string::npos) {
-                    courseExists=true;
-                    break;
-                }
-            }
-            file.close();
-        }
+//        bool courseExists=false;
+//        if (file.is_open()) {
+//            while (getline(file, line)) {
+//                if (line.find(allCourses[choice].courseName)!=std::string::npos) {
+//                    courseExists=true;
+//                    break;
+//                }
+//            }
+//            file.close();
+//        }
 
         // 检查所选课程是否已经在学生的课程列表中
         for (int i=0; i<student.selectedCourses.size(); i++) {
@@ -263,7 +247,6 @@ public:
                 printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
                 printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t你已经选了这门课，请再次尝试\t\t\t\t|\n");
                 printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-               // cout<<"你已经选了这门课，请再次尝试"<<endl;
                 return;
             }
         }
@@ -274,7 +257,6 @@ public:
             printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
             printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t选课成功!\t\t\t\t\t\t|\n");
             printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-           // cout<<"选课成功!"<<endl;
 
             // 使用课程代码作为选课编号
             student.selectedCourses.back().courseCode=allCourses[choice].courseCode;
@@ -282,9 +264,8 @@ public:
             printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
             printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t无效选择，请再次尝试!\t\t\t\t|\n");
             printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-            //cout<<"无效选择，请再次尝试"<<endl;
         }
-        
+
     }
 
     // 删除课程
@@ -310,16 +291,15 @@ public:
             printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
             printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t选课删除成功\t\t\t\t\t|\n");
             printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-           // cout<<"选课删除成功!"<<endl;
         } else {
             printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
             printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t  选择无效，请重试。\t\t\t\t|\n");
             printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-            //cout<<"选择无效，请重试。"<<endl;
         }
     }
 
 
+    // 显示学生的课程列表
     void displayMyCourses(  StudentInfo& student)   {
         printf("\n\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
@@ -328,7 +308,7 @@ public:
             cout<<"\t"<<"\t\t\t\t\t\t\t\t\t\t|"<<"\t\t课程名称: "<<course.courseName<<"\t\t"<<" 课程代码: "<<course.courseCode<<"\t\t\t|\n";
         }
     }
-
+    // 保存学生的选课信息到文件
     void saveCourseSelection(vector<StudentInfo>& students, string& filename) {
         ofstream file(filename);
         int m=0;
@@ -342,18 +322,12 @@ public:
                 }
             }
             file.close();
-           // printf("\n");
-          //  printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-           // printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t保存成功\t\t\t\t\t\t|\n");
-           // printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-           // printf("\n");
-            //cout<<"保存成功。"<<endl;
         } else {
             cout<<"无法打开文件"<<filename<<"进行保存。"<<endl;
         }
     }
 
-
+    // 从文件中读取学生的选课信息
     void loadCourseSelection(vector<StudentInfo>& students,  vector<Course>& allCourses,   string& filename) {
         ifstream file("selection.txt");
         string line;
@@ -362,7 +336,6 @@ public:
             string id, courseCode;
             getline(ss, id, ',');
             getline(ss, courseCode, ',');
-
             for (auto& student : students) {
                 if (student.username==id) {
                     for (auto& course : allCourses) {
@@ -380,15 +353,15 @@ public:
 };
 
 int main() {
-    vector<Course> allCourses;
-    vector<StudentInfo> students;
-    Admin admin;
-    Student student;
+    vector<Course> allCourses; // 所有课程信息
+    vector<StudentInfo> students; // 所有学生信息
+    Admin admin; // 管理员
+    Student student; // 学生
     string coursesFilename="courses.txt";
     string studentsFilename="students.txt";
     string selectionFilename="selection.txt";
-    admin.loadFromFile(allCourses, coursesFilename);
-    ifstream studentFile(studentsFilename);
+    admin.loadFromFile(allCourses, coursesFilename); // 从文件中读取课程信息
+    ifstream studentFile(studentsFilename); // 从文件中读取学生信息
     if (studentFile.is_open()) {
         students.clear();
         string line;
@@ -410,7 +383,6 @@ int main() {
     }
 
     student.loadCourseSelection(students, allCourses, selectionFilename);
-
     while (true) {
         printf("\n\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
@@ -425,10 +397,8 @@ int main() {
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t3.退出系统\t\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t选择操作（1/2/3）\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-      //  cout<<"\n1. 登录为管理员\n2. 登录为学生\n3. 退出\n选择操作（1/2/3）:";
         int choice;
         cin>>choice;
-
         if (cin.fail()) {
             cout<<"输入错误，请输入数字。"<<endl;
             cin.clear();
@@ -438,7 +408,6 @@ int main() {
             cout<<"输入错误，请输入范围内的选项。"<<endl;
             continue;
         }
-
         switch (choice) {
             case 1: {
                 printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
@@ -452,13 +421,11 @@ int main() {
                     printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
                     printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t  密码错误，登录失败。\t\t\t\t|\n");
                     printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-                    //cout<<"密码错误，登录失败。"<<endl;
                     break;
                 } else{
                     printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
                     printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t  密码正确，登录成功。\t\t\t\t|\n");
                     printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-                  //  cout<<"密码正确，登录成功。"<<endl;
                 }
                 while (true) {
                     printf("\n\n");
@@ -478,12 +445,11 @@ int main() {
                     printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t5. 返回上一级\t\t\t\t\t|\n");
                     printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t选择操作（1/2/3/4/5）:\t\t\t|\n");
                     printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-                    //cout<<"\n\n2. 删除课程\n3. 显示所有课程\n4. 保存课程信息到文件\n5. 返回上一级\n选择操作（1/2/3/4/5）:";
                     cin>>choice;
                     if (cin.fail()) {
                         cout<<"输入错误，请输入数字。"<<endl;
-                        cin.clear();
-                        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                        cin.clear(); // 清除错误标志
+                        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // 忽略输入缓冲区中的所有字符
                         continue;        }
                     if (choice < 1 || choice > 5) {
                         cout<<"输入错误，请输入范围内的选项。"<<endl;
@@ -532,13 +498,11 @@ int main() {
                 printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t3. 返回上一级\t\t\t\t\t|\n");
                 printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t选择操作（1/2/3）\t\t\t\t|\n");
                 printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-             //   cout<<"\n1. 登录\n2. 注册\n3. 返回上一级\n选择操作（1/2/3）:";
                 cin>>choice;
                 if (cin.fail()) {
                     printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
                     printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t  输入错误，请输入数字。\t\t\t\t|\n");
                     printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-                  //  cout<<"输入错误，请输入数字。"<<endl;
                     cin.clear();
                     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                     continue;        }
@@ -546,7 +510,6 @@ int main() {
                     printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
                     printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t  输入错误，请输入范围内的选项。\t\t\t|\n");
                     printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-                   // cout<<"输入错误，请输入范围内的选项。"<<endl;
                     continue;
                 }
                 switch (choice) {
@@ -557,7 +520,6 @@ int main() {
                             printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
                             printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t学生登录成功！\t\t\t\t\t|\n");
                             printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-                            //cout<<"\n学生登录成功！"<<endl;
                             while (true) {
                                 printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
                                 printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t   学生界面\t\t\t\t\t|\n");
@@ -573,34 +535,31 @@ int main() {
                                 printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t4. 返回上一级\t\t\t\t\t|\n");
                                 printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t选择操作（1/2/3/4）:\t\t\t\t|\n");
                                 printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-                             //   cout<<"\n1. 添加课程\n2. 删除课程\n3. 显示我的课程\n4. 返回上一级\n选择操作（1/2/3/4）:";
                                 cin>>choice;
                                 if (cin.fail()) {
                                     printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
                                     printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t输入错误，请输入数字！\t\t\t\t|\n");
                                     printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-                                    //cout<<"输入错误，请输入数字。"<<endl;
                                     cin.clear();
-                                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // 忽略输入缓冲区中的所有字符
                                     continue;        }
                                 if (choice < 1 || choice > 4) {
                                     printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
                                     printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t  输入错误，请输入范围内的选项。\t\t\t|\n");
                                     printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-                                    //cout<<"输入错误，请输入范围内的选项。"<<endl;
                                     continue;
                                 }
                                 switch (choice) {
                                     case 1:
-                                        student.addCourse(allCourses, students[stuid]);
-                                        student.saveCourseSelection(students, selectionFilename);
+                                        student.addCourse(allCourses, students[stuid]); // 添加课程
+                                        student.saveCourseSelection(students, selectionFilename); // 保存选课信息到文件
                                         break;
                                     case 2:
-                                        student.deleteCourse(allCourses, students[stuid]);
-                                        student.saveCourseSelection(students, selectionFilename);
+                                        student.deleteCourse(allCourses, students[stuid]); // 删除课程
+                                        student.saveCourseSelection(students, selectionFilename);// 保存选课信息到文件
                                         break;
                                     case 3:
-                                        student.displayMyCourses(students[stuid]);
+                                        student.displayMyCourses(students[stuid]); // 显示学生的课程列表
                                         break;
                                     case 4:
                                         cout<<"\n返回上一级。\n";
@@ -609,7 +568,6 @@ int main() {
                                         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
                                         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t    无效的选项。\t\t\t\t\t|\n");
                                         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-                                        //cout<<"无效的选项。"<<endl;
                                 }
                                 if (choice==4) {
                                     break;
@@ -619,7 +577,6 @@ int main() {
                             printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
                             printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t登录失败，用户名或密码错误。\t\t\t|\n");
                             printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-                           // cout<<"登录失败，用户名或密码错误。"<<endl;
                         }
                         break;
                     }
@@ -637,6 +594,7 @@ int main() {
             }
 
             case 3:
+                // 保存课程信息到文件
                 admin.saveToFile(allCourses, coursesFilename);
                 student.saveToFile(students, studentsFilename);
                 student.saveCourseSelection(students, selectionFilename);
@@ -646,6 +604,5 @@ int main() {
                 cout<<"无效的选项。"<<endl;
         }
     }
-
     return 0;
 }
