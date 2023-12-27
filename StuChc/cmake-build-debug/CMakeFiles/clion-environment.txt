@@ -1,4 +1,4 @@
-ToolSet: 6.0 w64 (local)@E:\qt5\Tools\mingw730_64
+ToolSet: 6.0 w64 (local)@D:\app\mingw\mingw64
 Options: 
 
 Options:

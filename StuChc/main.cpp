@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
+#include <random>
 
 using namespace std;
 
@@ -23,13 +24,25 @@ struct StudentInfo {
 class Admin {
 private:
     int nextCourseId;
+    std::mt19937 gen;
 public:
-    Admin() : nextCourseId(1) {} // 构造函数初始化课程编号为1
+    Admin() : nextCourseId(1), gen(std::random_device{}()) {} // 构造函数初始化课程编号为1和随机数生成器
+// 在 Admin 类中添加以下方法用于检查课程代码的唯一性
+    bool isCourseCodeUnique(const vector<Course>& courses, const string& courseCode) {
+        return find_if(courses.begin(), courses.end(),
+                       [courseCode](const Course& course) {
+                           return course.courseCode == courseCode;
+                       }) == courses.end();
+    }
 
     // 添加课程信息 编号/名称/任课老师
     void addCourse(vector<Course>& courses) {
         Course course;
-        course.courseCode=to_string(nextCourseId++); // 使用当前编号，然后递增
+        std::uniform_int_distribution<int> dis(10000000, 99999999);
+
+        do {
+            course.courseCode = std::to_string(dis(gen));
+        } while (!isCourseCodeUnique(courses, course.courseCode));
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t  当前操作\t\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
@@ -443,7 +456,7 @@ int main() {
                     break;
                 } else{
                     printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-                    printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t  密码错误，登录成功。\t\t\t\t|\n");
+                    printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t  密码正确，登录成功。\t\t\t\t|\n");
                     printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
                   //  cout<<"密码正确，登录成功。"<<endl;
                 }
