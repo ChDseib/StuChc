@@ -8,24 +8,29 @@
 
 using namespace std;
 
+// 课程结构体，用于存储课程信息
 struct Course {
-    string courseCode;
-    string courseName;
-    string teacher;
-    int courseNumber;
+    string courseCode;    // 课程代码
+    string courseName;    // 课程名称
+    string teacher;       // 授课教师
+    int courseNumber;     // 课程编号
 };
 
+// 学生信息结构体，用于存储学生信息
 struct StudentInfo {
-    string username;
-    string password;
-    string major;
-    vector<Course> selectedCourses;
+    string username;            // 学生用户名
+    string password;            // 学生账户密码
+    string major;               // 学生专业
+    vector<Course> selectedCourses;  // 存储学生选修的课程信息的向量
 };
+
+// 教师信息结构体，用于存储教师信息
 struct TeacherInfo {
-    string username;
-    string password;
-    vector<Course> allCourses;
+    string username;        // 教师用户名
+    string password;        // 教师账户密码
+    vector<Course> allCourses;   // 存储教师所授课程信息的向量
 };
+
 class Admin {
 private:
     int nextCourseId;
@@ -248,17 +253,17 @@ public:
         // 在添加课程之前，先检查selection.txt文件中是否已存在所选课程
         std::ifstream file("selection.txt");
         std::string line;
-//        bool courseExists=false;
-//        if (file.is_open()) {
-//            while (getline(file, line)) {
-//                if (line.find(allCourses[choice].courseName)!=std::string::npos) {
-//                    courseExists=true;
-//                    break;
-//                }
-//            }
-//            file.close();
-//        }
         allCourses[choice].courseNumber--;
+        for (int i=0; i<student.selectedCourses.size(); i++) {
+            if (allCourses[choice].courseNumber <= 0) {
+                printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t 课程已经选满，请再次尝试 \t\t\t\t|\n");
+                printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                printf("\n\n");
+                allCourses[choice].courseNumber++;
+                return;
+            }
+        }
         // 检查所选课程是否已经在学生的课程列表中
         for (int i=0; i<student.selectedCourses.size(); i++) {
             if (student.selectedCourses[i].courseName==allCourses[choice].courseName) {
@@ -324,16 +329,23 @@ public:
 
 
     // 显示学生的课程列表
-    void displayMyCourses(  StudentInfo& student)   {
+    void displayMyCourses( vector<Course>& allCourses, StudentInfo& student)   {
         printf("\n\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-------------------------------------------------------------------|\n");
         cout<<"\t\t\t\t\t\t\t\t\t\t\t|"<<"\t\t\t\t\t\t学生 "<<student.username<<" 所选的课程有：\t\t\t\t\t\t\t|\n";
+        int j =0;
         for (  auto& course : student.selectedCourses) {
-            cout<<"\t"<<"\t\t\t\t\t\t\t\t\t\t|"<<"\t\t课程名称: "<<course.courseName<<"\t\t"<<" 课程代码: "<<course.courseCode<<"\t\t"<<" 课程余量: "<<course.courseNumber<<"\t\t|\n";
+            for(int i =0;i<allCourses.size();++i){
+                if(course.courseName==allCourses[i].courseName){
+                    j =i;
+                }
+            }
+            cout<<"\t"<<"\t\t\t\t\t\t\t\t\t\t|"<<"\t\t课程名称: "<<course.courseName<<"\t\t"<<" 课程代码: "<<course.courseCode<<"\t\t"<<" 课程余量: "<<allCourses[j].courseNumber<<"\t\t|\n";
         }
         printf("\t\t\t\t\t\t\t\t\t\t\t|-------------------------------------------------------------------|\n");
         printf("\n\n");
     }
+
     // 保存学生的选课信息到文件
     void saveCourseSelection(vector<StudentInfo>& students, string& filename) {
         ofstream file(filename);
@@ -681,7 +693,7 @@ int main() {
                                         student.saveCourseSelection(students, selectionFilename);// 保存选课信息到文件
                                         break;
                                     case 3:
-                                        student.displayMyCourses(students[stuid]); // 显示学生的课程列表
+                                        student.displayMyCourses(allCourses,students[stuid]); // 显示学生的课程列表
                                         break;
                                     case 4:
                                         cout<<"\n返回上一级。\n";
