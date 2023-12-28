@@ -101,7 +101,7 @@ public:
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t   全部课程\t\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\"课程编号\t\t课程名称\t\t任课老师\t\t课程数\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t课程编号\t\t课程名称\t\t任课老师\t\t课程数\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n");
         //int j =1;
         for (int i = 0; i < courses.size(); ++i) {
@@ -442,10 +442,9 @@ public:
         string line;
         ifstream file(filename);
         bool found = false;
-
+        int serialNumber = 1;
         if (file.is_open()) {
             cout << "教师 " << teachers[teacherid].username << " 的课程列表：" << endl;
-
             while (getline(file, line)) {
                 if (line.find(teachers[teacherid].username) != string::npos) {
                     found = true;
@@ -453,7 +452,8 @@ public:
                     size_t pos = line.find(',');
                     if (pos != string::npos) {
                         string courseName = line.substr(pos + 1);
-                        cout << courseName << endl;
+                        cout << serialNumber <<"、 "<< courseName << endl;
+                        ++serialNumber;
                     }
                 }
             }
