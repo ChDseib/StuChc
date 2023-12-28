@@ -12,6 +12,7 @@ struct Course {
     string courseCode;
     string courseName;
     string teacher;
+    int courseNumber;
 };
 
 struct StudentInfo {
@@ -60,6 +61,12 @@ public:
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t   请输入任课老师\t\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         cin>>course.teacher;
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t   当前操作\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t   请输入课程数量\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+        cin>>course.courseNumber;
         courses.push_back(course);
     }
 
@@ -88,16 +95,19 @@ public:
     }
 
 
-    void displayAllCourses(  vector<Course>& courses)   {
+    void displayAllCourses(  vector<Course>& courses) {
 
         printf("\n\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t   全部课程\t\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\"课程编号\t\t课程名称\t\t任课老师\"\t\t\t|\n");
-        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t\t\t\t\t\t\t|\n");
-        for (int i=0; i<courses.size(); ++i) {
-            cout<<"\t\t\t\t\t\t\t\t\t\t\t|\t\t   "<<courses[i].courseCode<<"\t\t"<<courses[i].courseName<<"\t\t"<<  courses[i].teacher<<"\t\t\t\t|"<<endl;
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\"课程编号\t\t课程名称\t\t任课老师\t\t课程数\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n");
+        //int j =1;
+        for (int i = 0; i < courses.size(); ++i) {
+            cout << "\t\t\t\t\t\t\t\t\t\t\t\t"<< courses[i].courseCode << "\t" << courses[i].courseName << "\t\t"
+                 << courses[i].teacher << "\t\t  " << courses[i].courseNumber << "\t\t\t\t" << endl;
+
         }
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
     }
@@ -105,7 +115,7 @@ public:
         ofstream file(filename);
         if (file.is_open()) {
             for (int i=0; i<courses.size(); ++i) {
-                file<<courses[i].courseCode<<","<<courses[i].courseName<<","<<courses[i].teacher<<endl;
+                file<<courses[i].courseCode<<","<<courses[i].courseName<<","<<courses[i].teacher<<","<<courses[i].courseNumber<<endl;
             }// 保存课程信息到文件
             file.close();
         } else {
@@ -122,10 +132,12 @@ public:
                 Course course;
                 int pos1=line.find(','); // 查找第一个逗号的位置
                 int pos2=line.find(',', pos1+1);// 查找第二个逗号的位置
+                int pos3 = line.find(',', pos2+1);
                 if (pos1!=string::npos&&pos2!=string::npos) {
                     course.courseCode=line.substr(0, pos1);// 课程编号
                     course.courseName=line.substr(pos1+1, pos2 - pos1 - 1);// 课程名称
-                    course.teacher=line.substr(pos2+1);
+                    course.teacher=line.substr(pos2+1,pos3 - pos2 - 1);
+                    course.courseNumber=atoi(line.substr(pos3+1).c_str());
                     courses.push_back(course);
 
                     // 更新最大课程编号
@@ -216,13 +228,15 @@ public:
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t   全部课程\t\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\"课程编号\t\t课程名称\t\t任课老师\"\t\t\t|\n");
-        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t\t\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\"课程序号\t\t课程名称\t\t任课老师\t\t选课余量\"\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n");
+        int j =1;
         for (int i=0; i < allCourses.size(); ++i) {
-            cout<<"\t\t\t\t\t\t\t\t\t\t\t|\t\t   "<<allCourses[i].courseCode<<"\t\t"<<allCourses[i].courseName<<"\t\t"<<  allCourses[i].teacher<<"\t\t\t\t|"<<endl;
+            cout<<"\t\t\t\t\t\t\t\t\t\t\t\t  "<<j<<"\t\t\t"<<allCourses[i].courseName<<"\t\t"<<  allCourses[i].teacher<<"\t\t  "<<allCourses[i].courseNumber<<"\t\t\t\t"<<endl;
+           j++;
         }
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-
+        printf("\n\n");
         int choice;
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t当前操作:选课\t\t\t\t\t|\n");
@@ -244,13 +258,15 @@ public:
 //            }
 //            file.close();
 //        }
-
+        allCourses[choice].courseNumber--;
         // 检查所选课程是否已经在学生的课程列表中
         for (int i=0; i<student.selectedCourses.size(); i++) {
             if (student.selectedCourses[i].courseName==allCourses[choice].courseName) {
                 printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
                 printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t你已经选了这门课，请再次尝试\t\t\t\t|\n");
                 printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
+                printf("\n\n");
+                allCourses[choice].courseNumber++;
                 return;
             }
         }
@@ -279,7 +295,7 @@ public:
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t当前已选课程\t\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         for(i=0; i<student.selectedCourses.size(); i++) {
-            cout<<"\t\t\t\t\t\t\t\t\t\t\t|"<<"\t\t\t\t"<<i+1<<": "<<student.selectedCourses[i].courseName<<" by "<<student.selectedCourses[i].teacher<<"\t\t\t\t\t|\n";
+            cout<<"\t\t\t\t\t\t\t\t\t\t\t"<<"\t\t\t\t"<<i+1<<": "<<student.selectedCourses[i].courseName<<" by "<<student.selectedCourses[i].teacher<<"\t\t\t\t\t\n";
         }
 
         int choice;
@@ -289,6 +305,10 @@ public:
         //cout<<"输入你想删除课程的序号： ";
         cin>>choice;
         choice=choice - 1;
+        for(int i =0;i<allCourses.size();i++){
+           if(allCourses[i].courseName==student.selectedCourses[choice].courseName){
+            allCourses[i].courseNumber++;}
+        }
 
         if(choice>=0&&choice<student.selectedCourses.size()) {
             student.selectedCourses.erase(student.selectedCourses.begin()+choice);
@@ -306,11 +326,13 @@ public:
     // 显示学生的课程列表
     void displayMyCourses(  StudentInfo& student)   {
         printf("\n\n");
-        printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-        cout<<"\t\t\t\t\t\t\t\t\t\t\t|"<<"\t\t\t\t学生 "<<student.username<<" 所选的课程有：\t\t\t\t|\n";
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-------------------------------------------------------------------|\n");
+        cout<<"\t\t\t\t\t\t\t\t\t\t\t|"<<"\t\t\t\t\t\t学生 "<<student.username<<" 所选的课程有：\t\t\t\t\t\t\t|\n";
         for (  auto& course : student.selectedCourses) {
-            cout<<"\t"<<"\t\t\t\t\t\t\t\t\t\t|"<<"\t\t课程名称: "<<course.courseName<<"\t\t"<<" 课程代码: "<<course.courseCode<<"\t\t\t|\n";
+            cout<<"\t"<<"\t\t\t\t\t\t\t\t\t\t|"<<"\t\t课程名称: "<<course.courseName<<"\t\t"<<" 课程代码: "<<course.courseCode<<"\t\t"<<" 课程余量: "<<course.courseNumber<<"\t\t|\n";
         }
+        printf("\t\t\t\t\t\t\t\t\t\t\t|-------------------------------------------------------------------|\n");
+        printf("\n\n");
     }
     // 保存学生的选课信息到文件
     void saveCourseSelection(vector<StudentInfo>& students, string& filename) {
@@ -495,7 +517,7 @@ int main() {
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t3.登录为教师\t\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t\t\t\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t4.退出系统\t\t\t\t\t|\n");
-        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t选择操作（1/2/3/4）\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t选择操作（1/2/3/4）\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         int choice;
         cin>>choice;
@@ -737,7 +759,7 @@ int main() {
                                 printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t1. 查看授课\t\t\t\t\t|\n");
                                 printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t\t\t\t\t\t\t\t|\n");
                                 printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t2. 返回上一级\t\t\t\t\t|\n");
-                                printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t选择操作（1/2）:\t\t\t\t|\n");
+                                printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t选择操作（1/2）:\t\t\t\t|\n");
                                 printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
                                 cin>>choice;
                                 if (cin.fail()) {
