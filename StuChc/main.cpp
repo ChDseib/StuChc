@@ -72,7 +72,7 @@ public:
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t   请输入课程数量\t\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         cin>>course.courseNumber;
-        courses.push_back(course);
+        courses.push_back(course); // 将课程对象添加到课程向量中
     }
 
     void deleteCourse(vector<Course>& courses) {
@@ -138,7 +138,7 @@ public:
                 int pos1=line.find(','); // 查找第一个逗号的位置
                 int pos2=line.find(',', pos1+1);// 查找第二个逗号的位置
                 int pos3 = line.find(',', pos2+1);
-                if (pos1!=string::npos&&pos2!=string::npos) {
+                if (pos1!=string::npos&&pos2!=string::npos) { // 提取课程信息并存储到Course对象中
                     course.courseCode=line.substr(0, pos1);// 课程编号
                     course.courseName=line.substr(pos1+1, pos2 - pos1 - 1);// 课程名称
                     course.teacher=line.substr(pos2+1,pos3 - pos2 - 1);
@@ -150,8 +150,8 @@ public:
                     nextCourseId=max(nextCourseId, courseId+1);
                 }
             }
-            file.close();   // 从文件中读取课程信息
-            cout<<"从文件"<<filename<<"中读取课程信息成功。"<<endl;
+            file.close();
+            cout<<"从文件"<<filename<<"中读取课程信息成功。"<<endl; // 从文件中读取课程信息
         } else {
             cout<<"无法打开文件"<<filename<<"进行读取。"<<endl;
         }
@@ -271,7 +271,7 @@ public:
                 printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t你已经选了这门课，请再次尝试\t\t\t\t|\n");
                 printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
                 printf("\n\n");
-                allCourses[choice].courseNumber++;
+                allCourses[choice].courseNumber++; // 所有课程中的第 choice 门课程的人数加一
                 return;
             }
         }
@@ -334,6 +334,7 @@ public:
         printf("\t\t\t\t\t\t\t\t\t\t\t|-------------------------------------------------------------------|\n");
         cout<<"\t\t\t\t\t\t\t\t\t\t\t|"<<"\t\t\t\t\t\t学生 "<<student.username<<" 所选的课程有：\t\t\t\t\t\t\t|\n";
         int j =0;
+        // 遍历学生已选课程列表中的每门课程，并在所有课程中查找匹配的课程名称
         for (  auto& course : student.selectedCourses) {
             for(int i =0;i<allCourses.size();++i){
                 if(course.courseName==allCourses[i].courseName){
@@ -370,11 +371,11 @@ public:
         ifstream file("selection.txt");
         string line;
         while (getline(file, line)) {
-            stringstream ss(line);
+            stringstream ss(line); // 使用字符串流进行分词处理
             string id, courseCode;
-            getline(ss, id, ',');
+            getline(ss, id, ','); // 从字符串流中获取学生用户名
             getline(ss, courseCode, ',');
-            for (auto& student : students) {
+            for (auto& student : students) {  // 在学生列表中查找匹配学生用户名的学生对象
                 if (student.username==id) {
                     for (auto& course : allCourses) {
                         if (course.courseCode==courseCode) {
@@ -429,7 +430,7 @@ public:
         }
     }
 
-    void loadFromFile(vector<TeacherInfo> &teachers, string filename) {
+    void loadFromFile(vector<TeacherInfo> &teachers, string filename) { // 从文件中加载教师信息到存储教师的向量
         ifstream teacherFile(filename);
         if (teacherFile.is_open()) {
             teachers.clear();
@@ -438,7 +439,7 @@ public:
                 TeacherInfo teacherInfo;
                 int pos = line.find(',');
                 if (pos != string::npos) {
-                    teacherInfo.username = line.substr(0, pos);
+                    teacherInfo.username = line.substr(0, pos);// 提取用户名部分
                     teacherInfo.password = line.substr(pos + 1);
                     teachers.push_back(teacherInfo);
                 }
@@ -458,9 +459,8 @@ public:
         if (file.is_open()) {
             cout << "教师 " << teachers[teacherid].username << " 的课程列表：" << endl;
             while (getline(file, line)) {
-                if (line.find(teachers[teacherid].username) != string::npos) {
+                if (line.find(teachers[teacherid].username) != string::npos) { // 在文件中找到与当前教师用户名匹配的行
                     found = true;
-                    // Assuming the format is "teacher_username,course_name"
                     size_t pos = line.find(',');
                     if (pos != string::npos) {
                         string courseName = line.substr(pos + 1);
@@ -638,7 +638,7 @@ int main() {
                     printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t  输入错误，请输入数字。\t\t\t\t|\n");
                     printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
                     cin.clear();
-                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');// 忽略输入缓冲区中的剩余字符，直到遇到换行符为止
                     continue;        }
                 if (choice < 1 || choice > 3) {
                     printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
