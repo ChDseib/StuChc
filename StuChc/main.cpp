@@ -69,7 +69,7 @@ public:
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t   当前操作\t\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t   请输入课程数量\t\t\t\t\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t   请输入课程人数\t\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         cin>>course.courseNumber;
         courses.push_back(course); // 将课程对象添加到课程向量中
@@ -106,7 +106,7 @@ public:
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|\t\t\t\t\t   全部课程\t\t\t\t\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t|-----------------------------------------------|\n");
-        printf("\t\t\t\t\t\t\t\t\t\t\t|\t课程编号\t\t课程名称\t\t任课老师\t\t课程数\t|\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t|\t课程编号\t\t课程名称\t\t任课老师\t\t剩余量\t|\n");
         printf("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n");
         //int j =1;
         for (int i=0; i<courses.size(); ++i) {
@@ -341,7 +341,7 @@ public:
                     j =i;
                 }
             }
-            cout<<"\t"<<"\t\t\t\t\t\t\t\t\t\t|"<<"\t\t课程名称: "<<course.courseName<<"\t\t"<<" 课程代码: "<<course.courseCode<<"\t\t"<<" 课程余量: "<<allCourses[j].courseNumber<<"\t\t|\n";
+            cout<<"\t"<<"\t\t\t\t\t\t\t\t\t\t|"<<"\t\t课程名称: "<<course.courseName<<"\t\t"<<" 课程代码: "<<course.courseCode<<"\t\t\t\t\t\t|\n";
         }
         printf("\t\t\t\t\t\t\t\t\t\t\t|-------------------------------------------------------------------|\n");
         printf("\n\n");
@@ -687,10 +687,12 @@ int main() {
                                     case 1:
                                         student.addCourse(allCourses, students[stuid]); // 添加课程
                                         student.saveCourseSelection(students, selectionFilename); // 保存选课信息到文件
+                                        admin.saveToFile(allCourses, coursesFilename);
                                         break;
                                     case 2:
                                         student.deleteCourse(allCourses, students[stuid]); // 删除课程
                                         student.saveCourseSelection(students, selectionFilename);// 保存选课信息到文件
+                                        admin.saveToFile(allCourses, coursesFilename);
                                         break;
                                     case 3:
                                         student.displayMyCourses(allCourses,students[stuid]); // 显示学生的课程列表
